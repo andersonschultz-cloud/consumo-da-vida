@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consumo da Vida | Quanto tempo da sua vida custa essa compra?</title>
+<meta name="description" content="Transforme o preço de qualquer produto em horas e dias da sua vida produtiva e tome decisões financeiras mais conscientes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  :root {
+    --bg: #F5F2EC;
+    --bg2: #EDEAE2;
+    --surface: #FFFFFF;
+    --surface2: #F9F7F3;
+    --text: #1A1916;
+    --text2: #5C5A54;
+    --text3: #9A9890;
+    --accent: #1D6A4A;
+    --accent-light: #E8F4EE;
+    --accent2: #8B5E3C;
+    --border: rgba(26,25,22,.1);
+    --border2: rgba(26,25,22,.06);
+    --red: #C84B31;
+    --amber: #B07D2E;
+    --green: #1D6A4A;
+    --radius: 16px;
+    --radius-sm: 8px;
+    --shadow: 0 2px 20px rgba(26,25,22,.08);
+    --shadow-lg: 0 8px 40px rgba(26,25,22,.14);
+  }
+  [data-theme="dark"] {
+    --bg: #141412;
+    --bg2: #1C1B18;
+    --surface: #222019;
+    --surface2: #2A2824;
+    --text: #F0EDE6;
+    --text2: #A8A49C;
+    --text3: #5C5A54;
+    --accent: #4DB887;
+    --accent-light: #1A3328;
+    --accent2: #D4956A;
+    --border: rgba(240,237,230,.1);
+    --border2: rgba(240,237,230,.05);
+    --shadow: 0 2px 20px rgba(0,0,0,.3);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,.45);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background .3s, color .3s;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border2);
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-dot {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .theme-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all .2s;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .theme-btn:hover { background: var(--bg2); }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 64px 32px 48px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 56px);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero p {
+    font-size: 17px;
+    color: var(--text2);
+    max-width: 460px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* MAIN */
+  .main { max-width: 740px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* CARD */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    transition: background .3s, border-color .3s;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 20px;
+  }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:520px){.grid2{grid-template-columns:1fr}}
+  .full { grid-column: 1 / -1; }
+
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500; color: var(--text2);
+  }
+  .help-icon {
+    width: 16px; height: 16px;
+    background: var(--bg2);
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: var(--text3);
+    cursor: default;
+    position: relative;
+  }
+  .help-icon:hover .tip { opacity: 1; pointer-events: auto; }
+  .tip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: var(--bg);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 8px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    max-width: 220px;
+    white-space: normal;
+    z-index: 200;
+    opacity: 0;
+    transition: opacity .15s;
+    pointer-events: none;
+    text-align: left;
+    line-height: 1.5;
+    min-width: 160px;
+  }
+  .tip::after {
+    content: '';
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--text);
+  }
+
+  .input-wrap { position: relative; }
+  .input-prefix {
+    position: absolute; left: 14px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px; color: var(--text3);
+    pointer-events: none;
+  }
+  input[type=text], input[type=number] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(29,106,74,.12);
+    background: var(--surface);
+  }
+  input.has-prefix { padding-left: 36px; }
+  input.error-field { border-color: var(--red); }
+  .err-msg { font-size: 12px; color: var(--red); display: none; }
+
+  .btn-calc {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background .2s, transform .1s, box-shadow .2s;
+    letter-spacing: .2px;
+    box-shadow: 0 4px 16px rgba(29,106,74,.25);
+  }
+  .btn-calc:hover { background: #155a3e; box-shadow: 0 6px 20px rgba(29,106,74,.35); }
+  .btn-calc:active { transform: scale(.98); }
+
+  /* RESULTS */
+  .results { display: none; animation: slideUp .4s ease; }
+  @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .greeting {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .greeting-sub { font-size: 14px; color: var(--text2); margin-bottom: 24px; }
+
+  .metrics-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+  @media(max-width:540px){.metrics-grid{grid-template-columns:repeat(2,1fr)}}
+  .metric-card {
+    background: var(--surface2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border2);
+  }
+  .metric-card .m-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+  .metric-card .m-val { font-size: 26px; font-weight: 600; color: var(--text); line-height: 1; }
+  .metric-card .m-val.green { color: var(--accent); }
+  .metric-card .m-unit { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  /* IMPACT BADGE */
+  .impact-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .impact-badge.low { background: #E8F4EE; color: #1D6A4A; }
+  .impact-badge.mod { background: #FEF3CD; color: #B07D2E; }
+  .impact-badge.high { background: #FDEBD5; color: #8B5E3C; }
+  .impact-badge.veryhigh { background: #FAE5E2; color: #C84B31; }
+  [data-theme="dark"] .impact-badge.low { background: #1A3328; color: #4DB887; }
+  [data-theme="dark"] .impact-badge.mod { background: #2E2510; color: #D4A55A; }
+  [data-theme="dark"] .impact-badge.high { background: #2E1E10; color: #D4956A; }
+  [data-theme="dark"] .impact-badge.veryhigh { background: #2E1010; color: #E07060; }
+
+  .msg-strip {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  /* CHART */
+  .chart-section { margin-bottom: 20px; }
+  .chart-header { font-size: 13px; font-weight: 500; color: var(--text2); margin-bottom: 12px; }
+  .chart-canvas-wrap { position: relative; height: 220px; width: 100%; }
+
+  /* REFLECTION */
+  .reflection-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+  }
+  .reflection-card::before {
+    content: '"';
+    font-family: 'DM Serif Display', serif;
+    font-size: 120px;
+    color: var(--accent);
+    opacity: .08;
+    position: absolute;
+    top: -20px; left: 12px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .reflection-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .reflection-text { font-family: 'DM Serif Display', serif; font-size: 19px; color: var(--text); line-height: 1.6; font-style: italic; }
+
+  /* SHARE */
+  .share-row { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+  .btn-share {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text2);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-share:hover { background: var(--surface2); border-color: var(--accent); color: var(--accent); }
+  .copy-ok { font-size: 12px; color: var(--accent); display: none; align-items: center; gap: 4px; }
+
+  /* HISTORY */
+  .history-card { margin-bottom: 20px; display: none; }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .btn-clear { font-size: 12px; color: var(--red); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .hist-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border2);
+    font-size: 13px;
+  }
+  .hist-item:last-child { border-bottom: none; }
+  .hist-main { font-weight: 500; color: var(--text); }
+  .hist-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .hist-del { background: none; border: none; color: var(--text3); cursor: pointer; padding: 4px; border-radius: 6px; transition: color .15s; }
+  .hist-del:hover { color: var(--red); }
+  .hist-empty { font-size: 13px; color: var(--text3); text-align: center; padding: 20px; }
+
+  /* ================== QDP MODAL ================== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    background: var(--surface);
+    border-radius: 24px;
+    max-width: 520px;
+    width: 100%;
+    padding: 40px 36px 32px;
+    position: relative;
+    transform: translateY(24px) scale(.97);
+    transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .35s;
+    opacity: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); opacity: 1; }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: var(--bg2); border: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    cursor: pointer; font-size: 16px; color: var(--text2);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+  }
+  .modal-close:hover { background: var(--border); }
+
+  .modal-eyebrow {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .modal-eyebrow span { width: 20px; height: 1px; background: var(--accent); display: inline-block; }
+
+  .modal h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px; line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .modal-sub { font-size: 14px; color: var(--text2); margin-bottom: 28px; line-height: 1.6; }
+
+  /* QDP STEPS */
+  .qdp-steps { display: flex; flex-direction: column; gap: 20px; margin-bottom: 28px; }
+  .qdp-step {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 18px;
+    background: var(--surface2);
+    border-radius: 14px;
+    border: 1px solid var(--border2);
+    transition: border-color .2s;
+  }
+  .qdp-step:hover { border-color: var(--accent); }
+  .qdp-letter {
+    width: 44px; height: 44px; min-width: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .qdp-letter.q { background: #E8F4EE; color: #1D6A4A; }
+  .qdp-letter.d { background: #FEF3CD; color: #B07D2E; }
+  .qdp-letter.p { background: #FAE5E2; color: #C84B31; }
+  [data-theme="dark"] .qdp-letter.q { background: #1A3328; color: #4DB887; }
+  [data-theme="dark"] .qdp-letter.d { background: #2E2510; color: #D4A55A; }
+  [data-theme="dark"] .qdp-letter.p { background: #2E1010; color: #E07060; }
+  .qdp-content {}
+  .qdp-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .qdp-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+  /* QUOTE */
+  .modal-quote {
+    background: var(--bg2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--text2);
+    margin-bottom: 28px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  /* TIME IS LIFE */
+  .time-reminder {
+    display: flex; gap: 8px;
+    background: var(--accent-light);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  /* FINAL Q */
+  .final-q {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .btn-yes {
+    padding: 13px;
+    background: var(--accent);
+    color: #fff;
+    border: none; border-radius: 12px;
+    font-size: 14px; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+  }
+  .btn-yes:hover { background: #155a3e; }
+  .btn-yes:active { transform: scale(.98); }
+  .btn-reflect {
+    padding: 13px;
+    background: transparent;
+    color: var(--text2);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 14px; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-reflect:hover { border-color: var(--text2); color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px 20px;
+    font-size: 12px;
+    color: var(--text3);
+    border-top: 1px solid var(--border2);
+  }
+  .footer-brand { font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text2); margin-bottom: 6px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">
+    <span class="logo-dot"></span>
+    Consumo da Vida
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 Modo escuro</button>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">
+    <span>●</span> Consumo Consciente
+  </div>
+  <h1>Quanto da sua <em>vida</em><br>custa essa compra?</h1>
+  <p>Descubra em horas e dias reais quanto do seu tempo de vida produtiva é necessário para adquirir um produto — e reflita antes de decidir.</p>
+</div>
+
+<main class="main">
+
+  <!-- FORM CARD -->
+  <div class="card">
+    <div class="section-label">Seus dados</div>
+    <div class="grid2">
+      <div class="field full">
+        <div class="field-label">
+          Seu nome
+          <span class="help-icon">?<div class="tip">Informe seu nome para personalizar os resultados.</div></span>
+        </div>
+        <input type="text" id="nome" placeholder="Como você se chama?" aria-label="Seu nome" />
+      </div>
+      <div class="field">
+        <div class="field-label">
+          Salário mensal
+          <span class="help-icon">?<div class="tip">Informe o valor bruto ou líquido que você recebe por mês.</div></span>
+        </div>
+        <div class="input-wrap">
+          <span class="input-prefix">R$</span>
+          <input type="number" id="salario" class="has-prefix" placeholder="5.000" min="1" aria-label="Salário mensal" />
+        </div>
+        <div class="err-msg" id="err-sal">Informe um valor válido.</div>
+      </div>
+      <div class="field">
+        <div class="field-label">
+          Horas trabalhadas/mês
+          <span class="help-icon">?<div class="tip">Total de horas que você trabalha em média por mês. Ex.: 220h.</div></span>
+        </div>
+        <input type="number" id="horas" placeholder="220" min="1" aria-label="Horas trabalhadas por mês" />
+        <div class="err-msg" id="err-hor">Informe um valor válido.</div>
+      </div>
+      <div class="field full">
+        <div class="field-label">
+          Valor do produto
+          <span class="help-icon">?<div class="tip">Informe o valor total do produto ou serviço que deseja adquirir.</div></span>
+        </div>
+        <div class="input-wrap">
+          <span class="input-prefix">R$</span>
+          <input type="number" id="produto" class="has-prefix" placeholder="3.500" min="0.01" step="0.01" aria-label="Valor do produto" />
+        </div>
+        <div class="err-msg" id="err-pro">Informe um valor válido.</div>
+      </div>
+    </div>
+    <button class="btn-calc" onclick="calcular()">Calcular custo em vida →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <div class="card">
+      <p class="greeting" id="greeting"></p>
+      <p class="greeting-sub" id="greetingSub"></p>
+
+      <div id="impact-badge"></div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="m-label">Valor/hora</div>
+          <div class="m-val green" id="m-hora">—</div>
+          <div class="m-unit">R$/h</div>
+        </div>
+        <div class="metric-card">
+          <div class="m-label">Horas</div>
+          <div class="m-val" id="m-horas">—</div>
+          <div class="m-unit">horas</div>
+        </div>
+        <div class="metric-card">
+          <div class="m-label">Dias</div>
+          <div class="m-val" id="m-dias">—</div>
+          <div class="m-unit">dias</div>
+        </div>
+        <div class="metric-card">
+          <div class="m-label">Do salário</div>
+          <div class="m-val" id="m-perc">—</div>
+          <div class="m-unit">%</div>
+        </div>
+      </div>
+
+      <div class="msg-strip" id="msg-strip"></div>
+
+      <div class="chart-section">
+        <div class="chart-header">Impacto visual</div>
+        <div class="chart-canvas-wrap">
+          <canvas id="myChart" role="img" aria-label="Gráfico mostrando horas, dias e percentual do salário comprometido"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div class="reflection-card">
+      <div class="reflection-label">✦ Reflexão financeira</div>
+      <div class="reflection-text" id="refl-text"></div>
+    </div>
+
+    <!-- SHARE -->
+    <div class="card" style="padding:20px 28px;">
+      <div class="section-label">Compartilhar</div>
+      <div class="share-row">
+        <button class="btn-share" onclick="share()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Copiar resultado
+        </button>
+      </div>
+      <div class="copy-ok" id="copy-ok">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Copiado!
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="card history-card" id="history-card">
+      <div class="section-header">
+        <div class="section-label" style="margin:0">Histórico de simulações</div>
+        <button class="btn-clear" onclick="clearHistory()">Limpar tudo</button>
+      </div>
+      <div id="history-list"></div>
+    </div>
+
+  </div><!-- /results -->
+
+</main>
+
+<!-- QDP MODAL -->
+<div class="modal-overlay" id="qdpOverlay" role="dialog" aria-modal="true" aria-label="Método QDP — Quero, Devo, Posso">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()" aria-label="Fechar">✕</button>
+
+    <div class="modal-eyebrow">
+      <span></span>Método QDP — Quero · Devo · Posso<span></span>
+    </div>
+    <h2>Uma reflexão antes da compra</h2>
+    <p class="modal-sub" id="modal-sub">Você está prestes a trocar parte da sua vida por este produto. Antes de decidir, considere três perguntas essenciais.</p>
+
+    <div class="qdp-steps">
+      <div class="qdp-step">
+        <div class="qdp-letter q">Q</div>
+        <div class="qdp-content">
+          <div class="qdp-title">Quero?</div>
+          <div class="qdp-desc" id="qdp-q">Você deseja este produto porque ele realmente agregará valor à sua vida, ou porque é o impulso do momento que está falando mais alto?</div>
+        </div>
+      </div>
+      <div class="qdp-step">
+        <div class="qdp-letter d">D</div>
+        <div class="qdp-content">
+          <div class="qdp-title">Devo?</div>
+          <div class="qdp-desc" id="qdp-d">Este produto atende uma necessidade real e presente, ou é algo que pode esperar por um momento mais oportuno?</div>
+        </div>
+      </div>
+      <div class="qdp-step">
+        <div class="qdp-letter p">P</div>
+        <div class="qdp-content">
+          <div class="qdp-title">Posso?</div>
+          <div class="qdp-desc" id="qdp-p">Você pode, de forma consciente e tranquila, trocar as horas calculadas da sua vida por este produto neste momento?</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-quote" id="modal-quote"></div>
+
+    <div class="time-reminder">
+      <span>⏳</span>
+      <span>Dinheiro pode ser recuperado. O tempo investido para conquistá-lo é parte da sua própria vida — e esse não volta.</span>
+    </div>
+
+    <p class="final-q">Depois dessa reflexão, você ainda deseja realizar esta compra?</p>
+
+    <div class="modal-btns">
+      <button class="btn-yes" onclick="closeModal()">Sim, continuo interessado</button>
+      <button class="btn-reflect" onclick="closeModal()">Vou refletir mais</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-brand">Consumo da Vida</div>
+  <div>Descubra quanto da sua vida vale aquilo que você deseja comprar.</div>
+</footer>
+
+<script>
+// ─── THEME ───────────────────────────────────────────────────────────────────
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let isDark = localStorage.getItem('cdv-theme') === 'dark' || (localStorage.getItem('cdv-theme') === null && prefersDark);
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('themeBtn').textContent = isDark ? '☀️ Modo claro' : '🌙 Modo escuro';
+}
+function toggleTheme(){ isDark = !isDark; localStorage.setItem('cdv-theme', isDark ? 'dark' : 'light'); applyTheme(); }
+applyTheme();
+
+// ─── UTILS ───────────────────────────────────────────────────────────────────
+function fmt(n, dec=2){ return n.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}); }
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const reflections = [
+  "Você trocaria {h} horas da sua vida por este produto?",
+  "Esse produto representa {d} dias do seu esforço profissional.",
+  "Imagine trabalhar {d} dias inteiros apenas para adquirir este item.",
+  "Vale comprometer {p}% do seu salário mensal com essa compra agora?",
+  "Cada hora de trabalho é um pedaço da sua vida. Este produto custa {h} delas.",
+  "Você ainda desejaria este produto se pagasse com horas de vida em vez de dinheiro?",
+  "Após {h} horas de trabalho, este produto ainda terá o mesmo valor para você?",
+  "Pense em {d} dias de trabalho. É quanto este produto custa na moeda mais preciosa: seu tempo.",
+  "Será que a satisfação deste produto durará mais do que os {d} dias necessários para conquistá-lo?",
+  "Você se lembraria desta compra daqui a um ano? Ela vale {h} horas da sua vida?"
+];
+
+const philosophicalQuotes = [
+  "Cada compra é uma troca silenciosa entre dinheiro e tempo.",
+  "Nem tudo o que desejamos precisa ser adquirido imediatamente.",
+  "O valor de um produto não está apenas no preço, mas no tempo necessário para conquistá-lo.",
+  "Pergunte-se se compraria este item novamente sabendo exatamente quantas horas de vida ele custa.",
+  "Algumas compras trazem satisfação por dias. Outras consomem semanas de trabalho.",
+  "O desejo é imediato. A necessidade costuma ser paciente.",
+  "O tempo investido para ganhar dinheiro é parte da sua própria vida.",
+  "A riqueza não está apenas no que possuímos, mas naquilo de que abrimos mão com sabedoria.",
+  "Consumir conscientemente é uma forma de respeitar o tempo que você dedicou ao trabalho.",
+  "Antes de comprar, pergunte: estou comprando um objeto ou estou vendendo meu tempo?",
+  "O estoicismo nos ensina a distinguir o que depende de nós e o que não depende — incluindo nossos desejos.",
+  "A disciplina financeira não é privação. É a arte de escolher com clareza o que merece o seu tempo.",
+  "Desejos passageiros custam horas permanentes.",
+  "Quem compra o que não precisa, em breve precisará vender o que tem.",
+  "A autoconsciência sobre o consumo é a primeira forma de liberdade financeira.",
+  "O preço real de qualquer coisa é a quantidade de vida que você troca por ela. — Henry David Thoreau (adaptado)",
+  "Pergunte a si mesmo, daqui a um ano, se ainda estará satisfeito com esta compra.",
+  "Há uma diferença entre o que o marketing cria e o que a vida realmente precisa.",
+  "A pausa antes da compra é o exercício mais poderoso da inteligência financeira.",
+  "Você não está gastando dinheiro. Você está gastando horas da sua existência.",
+  "A satisfação de um desejo nunca dura tanto quanto o esforço para realizá-lo.",
+  "Consumir menos pode ser uma forma de viver mais.",
+  "O que você possui acaba possuindo você — se você não escolheu com consciência.",
+  "Liberdade financeira começa quando você aprende a dizer não ao impulso.",
+  "Cada real economizado não é apenas dinheiro guardado — é tempo de vida recuperado.",
+  "O desejo de possuir é natural. A sabedoria está em questionar cada desejo.",
+  "Quanto mais consciência você coloca em suas compras, mais controle tem sobre o seu tempo.",
+  "Valorize seu tempo antes de gastar seu dinheiro — pois um é a origem do outro.",
+  "A reflexão de um minuto antes de comprar pode economizar semanas de trabalho.",
+  "Não existe compra pequena quando você conta em horas de vida."
+];
+
+// ─── CALCULATE ───────────────────────────────────────────────────────────────
+let chartInstance = null;
+let _shareText = '';
+
+function calcular(){
+  const nome = document.getElementById('nome').value.trim() || 'Você';
+  const salario = parseFloat(document.getElementById('salario').value);
+  const horas = parseFloat(document.getElementById('horas').value);
+  const produto = parseFloat(document.getElementById('produto').value);
+
+  let ok = true;
+  const checks = [{id:'salario',err:'err-sal'},{id:'horas',err:'err-hor'},{id:'produto',err:'err-pro'}];
+  checks.forEach(({id,err})=>{
+    const v = parseFloat(document.getElementById(id).value);
+    const el = document.getElementById(err);
+    if(!v || v<=0){ el.style.display='block'; document.getElementById(id).classList.add('error-field'); ok=false; }
+    else { el.style.display='none'; document.getElementById(id).classList.remove('error-field'); }
+  });
+  if(!ok) return;
+
+  const valorHora = salario / horas;
+  const horasNec = produto / valorHora;
+  const diasNec = horasNec / 8;
+  const percSal = (produto / salario) * 100;
+
+  // metrics
+  document.getElementById('greeting').textContent = `Olá, ${nome}!`;
+  document.getElementById('greetingSub').textContent = `Veja o custo real do produto que você deseja adquirir.`;
+  document.getElementById('m-hora').textContent = fmt(valorHora);
+  document.getElementById('m-horas').textContent = fmt(horasNec, 1);
+  document.getElementById('m-dias').textContent = fmt(diasNec, 1);
+  document.getElementById('m-perc').textContent = fmt(percSal, 1);
+
+  // impact badge
+  let impact, impactClass;
+  if(horasNec < 8){ impact='Impacto Baixo'; impactClass='low'; }
+  else if(horasNec < 40){ impact='Impacto Moderado'; impactClass='mod'; }
+  else if(horasNec < 160){ impact='Impacto Alto'; impactClass='high'; }
+  else { impact='Impacto Muito Alto'; impactClass='veryhigh'; }
+  document.getElementById('impact-badge').innerHTML = `<span class="impact-badge ${impactClass}">● ${impact}</span>`;
+
+  // message
+  let msg;
+  if(horasNec < 8) msg = 'Este produto custa menos de um dia do seu trabalho.';
+  else if(horasNec < 40) msg = 'Esta compra representa alguns dias da sua vida produtiva.';
+  else if(horasNec < 160) msg = 'Este produto representa uma parcela relevante do seu tempo de trabalho.';
+  else if(horasNec < 320) msg = 'Este produto equivale a aproximadamente um mês inteiro de trabalho.';
+  else msg = 'Esta compra representa mais de um mês de vida produtiva.';
+  document.getElementById('msg-strip').textContent = msg;
+
+  // reflection
+  const hR = parseFloat(horasNec.toFixed(1));
+  const dR = parseFloat(diasNec.toFixed(1));
+  const pR = parseFloat(percSal.toFixed(1));
+  const refl = reflections[Math.floor(Math.random()*reflections.length)]
+    .replace('{h}', fmt(hR,1)).replace('{d}', fmt(dR,1)).replace('{p}', fmt(pR,1));
+  document.getElementById('refl-text').textContent = refl;
+
+  // chart
+  renderChart(hR, dR, pR);
+
+  // show results
+  const res = document.getElementById('results');
+  res.style.display = 'block';
+
+  // share text
+  _shareText = `Descobri que preciso trabalhar ${fmt(hR,1)} horas (${fmt(dR,1)} dias) para comprar um produto de R$${fmt(produto)} usando o Consumo da Vida. Isso representa ${fmt(pR,1)}% do meu salário mensal. 💡`;
+
+  // save history
+  saveHistory({ produto: fmt(produto), horas: fmt(hR,1), dias: fmt(dR,1), perc: fmt(pR,1), data: new Date().toLocaleDateString('pt-BR') });
+  renderHistory();
+
+  // scroll then show QDP modal
+  res.scrollIntoView({ behavior:'smooth', block:'start' });
+  setTimeout(()=> openModal(nome, fmt(hR,1), fmt(produto), philosophicalQuotes[Math.floor(Math.random()*philosophicalQuotes.length)]), 800);
+}
+
+function renderChart(horas, dias, perc){
+  const ctx = document.getElementById('myChart');
+  if(chartInstance){ chartInstance.destroy(); }
+  const dark = isDark;
+  const gridColor = dark ? 'rgba(255,255,255,.07)' : 'rgba(0,0,0,.06)';
+  const tickColor = dark ? '#5C5A54' : '#9A9890';
+  chartInstance = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Horas necessárias', 'Dias de trabalho', '% do salário'],
+      datasets: [{
+        data: [horas, dias, perc],
+        backgroundColor: dark ? ['#4DB887','#2A7A5A','#1A5040'] : ['#1D6A4A','#4D9E7A','#9FD4B8'],
+        borderRadius: 8,
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: {
+        callbacks: { label: ctx => ` ${ctx.parsed.y}` }
+      }},
+      scales: {
+        y: { grid: { color: gridColor }, ticks: { color: tickColor, font: { size: 11 } } },
+        x: { grid: { display: false }, ticks: { color: tickColor, font: { size: 12 }, autoSkip: false } }
+      }
+    }
+  });
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+function openModal(nome, horas, valorProd, quote){
+  document.getElementById('modal-sub').textContent =
+    `${nome}, você está prestes a trocar ${horas} horas da sua vida por um produto de R$${valorProd}. Antes de decidir, reflita sobre três perguntas essenciais.`;
+  document.getElementById('qdp-p').textContent =
+    `Você pode, de forma consciente e tranquila, trocar ${horas} horas da sua vida por este produto neste momento?`;
+  document.getElementById('modal-quote').textContent = `"${quote}"`;
+  document.getElementById('qdpOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  document.getElementById('qdpOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('qdpOverlay').addEventListener('click', e=>{
+  if(e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+// ─── SHARE ───────────────────────────────────────────────────────────────────
+function share(){
+  navigator.clipboard.writeText(_shareText).then(()=>{
+    const el = document.getElementById('copy-ok');
+    el.style.display = 'flex';
+    setTimeout(()=> el.style.display='none', 3000);
+  }).catch(()=> alert(_shareText));
+}
+
+// ─── HISTORY ─────────────────────────────────────────────────────────────────
+function saveHistory(item){
+  const hist = JSON.parse(localStorage.getItem('cdv-hist') || '[]');
+  hist.unshift(item);
+  if(hist.length > 10) hist.pop();
+  localStorage.setItem('cdv-hist', JSON.stringify(hist));
+}
+function deleteHistItem(i){
+  const hist = JSON.parse(localStorage.getItem('cdv-hist') || '[]');
+  hist.splice(i,1);
+  localStorage.setItem('cdv-hist', JSON.stringify(hist));
+  renderHistory();
+}
+function clearHistory(){
+  localStorage.removeItem('cdv-hist');
+  renderHistory();
+}
+function renderHistory(){
+  const hist = JSON.parse(localStorage.getItem('cdv-hist') || '[]');
+  const card = document.getElementById('history-card');
+  const list = document.getElementById('history-list');
+  if(!hist.length){ card.style.display='none'; return; }
+  card.style.display = 'block';
+  list.innerHTML = hist.map((h,i)=>`
+    <div class="hist-item">
+      <div>
+        <div class="hist-main">R$ ${h.produto}</div>
+        <div class="hist-sub">${h.horas}h &middot; ${h.dias} dias &middot; ${h.perc}% &middot; ${h.data}</div>
+      </div>
+      <button class="hist-del" onclick="deleteHistItem(${i})" aria-label="Remover">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+renderHistory();
+</script>
+</body>
+</html>
