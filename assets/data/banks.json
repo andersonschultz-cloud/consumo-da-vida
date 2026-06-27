@@ -82,18 +82,20 @@
       "enabled": true,
       "minInvestment": 30
     },
-/*    {
-      "id": "selic27",
-      "name": "Tesouro Prefixado 2029",
-      "category": "tesouro_direto",
-      "product": "Tesouro Prefixado 2029 — título público federal",
-      "derive": { "base": "selicAdd", "add": 14.24 },
-      "color": "#4F46E5",
-      "logo": "https://logo.clearbit.com/tesourodireto.com.br",
-      "taxable": true,
-      "enabled": true,
-      "minInvestment": 30
-    },*/
+/*
+{
+  "id": "selic27",
+  "name": "Tesouro Prefixado 2029",
+  "category": "tesouro_direto",
+  "product": "Tesouro Prefixado 2029 — título público federal",
+  "derive": { "base": "selicAdd", "add": 14.24 },
+  "color": "#4F46E5",
+  "logo": "https://logo.clearbit.com/tesourodireto.com.br",
+  "taxable": true,
+  "enabled": true,
+  "minInvestment": 30
+}
+*/
     {
       "id": "poupanca",
       "name": "Poupança",
