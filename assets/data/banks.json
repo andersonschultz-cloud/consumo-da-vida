@@ -82,7 +82,7 @@
       "enabled": true,
       "minInvestment": 30
     },
-    {
+/*    {
       "id": "selic27",
       "name": "Tesouro Prefixado 2029",
       "category": "tesouro_direto",
@@ -93,7 +93,7 @@
       "taxable": true,
       "enabled": true,
       "minInvestment": 30
-    },
+    },*/
     {
       "id": "poupanca",
       "name": "Poupança",
