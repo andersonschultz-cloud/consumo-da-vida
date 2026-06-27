@@ -12,12 +12,13 @@
 
 /* ── Estado global do simulador ──────────────────────────── */
 let simState = {
-  options:    [],      // preenchido em initSim()
-  selic:      SELIC_FALLBACK,
-  years:      10,
-  scrubMonth: 120,
-  applyIR:    false,
-  dragging:   false,
+  options:     [],      // preenchido em initSim()
+  selic:       SELIC_FALLBACK,
+  years:       10,
+  scrubMonth:  120,
+  applyIR:     false,
+  dragging:    false,
+  assumedIPCA: 5.5,    // % a.a. — premissa para simulação do Tesouro IPCA+
 };
 let simInitialized = false;
 let _editingId     = null;  // ID sendo editado no form de banco custom
@@ -66,6 +67,30 @@ async function initSim() {
 
   // Registrar drag handlers
   _attachDragHandlers();
+
+  // Inicializar dados do Tesouro Direto (não-bloqueante)
+  _initTreasuryData();
+}
+
+/**
+ * Inicializa dados do Tesouro Direto de forma assíncrona.
+ * Restaura do cache primeiro, depois tenta API em background.
+ */
+async function _initTreasuryData() {
+  // Restaurar do cache local (resposta imediata)
+  const cached = loadTreasuryCache();
+  if (cached && cached.bonds && cached.bonds.length > 0) {
+    applyTreasuryBondsToSimState(cached.bonds, simState.selic, simState.assumedIPCA);
+    setTreasurySuccess(cached.source || 'cache', cached.fetchedAt);
+    renderOptList();
+  } else {
+    // Sem cache: marcar como idle para o usuário clicar em atualizar
+  }
+
+  // Busca em background (só se cache expirou ou não existe)
+  if (!isTreasuryCacheFresh()) {
+    await refreshTreasuryData();
+  }
 }
 
 /* ── Drag na linha do tempo ──────────────────────────────── */
@@ -108,6 +133,16 @@ function _attachDragHandlers() {
    HANDLERS DE INPUT
 ══════════════════════════════════════════════════════════ */
 
+/** Handler para mudança no IPCA estimado (premissa Tesouro IPCA+). */
+function onIPCAInput() {
+  const v = parseFloat(document.getElementById('assumedIPCA').value.replace(',', '.'));
+  if (!isFinite(v) || v < 0) return;
+  simState.assumedIPCA = v;
+  refreshTreasurySubs(simState.selic, v); // reconstrói sub-labels dos títulos IPCA+
+  renderOptList();
+  renderSim();
+}
+
 function onSelicInput() {
   const v = parseFloat(document.getElementById('selicInput').value.replace(',', '.'));
   if (!isFinite(v) || v < 0) return;
@@ -118,11 +153,22 @@ function onSelicInput() {
 
 /** Recomputa as taxas derivadas de CDI/Selic após mudança da Selic. */
 function syncDerivedRates() {
+  const ipca = simState.assumedIPCA != null ? simState.assumedIPCA : DEFAULT_ASSUMED_IPCA;
   simState.options = simState.options.map(o => {
-    if (!o.derive || o.derive.base === 'manual') return o;
+    if (!o.derive) return o;
+    if (o.derive.base === 'manual') return o;  // taxa fixa: não recomputa com Selic
+
+    // Títulos Tesouro Direto: delega ao treasuryCalculator
+    if (o.treasuryBond) {
+      const newRate = round2(deriveRate(o.derive, simState.selic, ipca));
+      const bondData = { indexer: o.indexer, spread: o.derive.add, rate: o.derive.rate, realRate: o.derive.realRate };
+      return { ...o, rate: newRate, sub: buildTreasurySub(bondData, simState.selic, ipca) };
+    }
+
+    // Bancos privados (CDI, Selic, Poupança)
     return {
       ...o,
-      rate: round2(deriveRate(o.derive, simState.selic)),
+      rate: round2(deriveRate(o.derive, simState.selic, ipca)),
       sub:  o.id === 'poupanca' ? poupSub(simState.selic) : o.sub,
     };
   });
@@ -275,11 +321,26 @@ function renderOptList() {
       </label>
     </div>`;
 
+  const fixedPrivate = fixed.filter(o => !o.treasuryBond);
+  const fixedTreasury = fixed.filter(o => o.treasuryBond);
+
   document.getElementById('optList').innerHTML =
-    `<div class="opt-separator"><span>Padrão</span></div>` + fixed.map(rowHtml).join('') +
+    // Bancos privados
+    `<div class="opt-separator"><span>Bancos e Fintechs</span></div>` +
+    fixedPrivate.map(rowHtml).join('') +
+
+    // Tesouro Direto (com controles próprios)
+    buildTreasurySeparatorHTML() +
+    fixedTreasury.map(rowHtml).join('') +
+
+    // Personalizados
     (custom.length
-      ? `<div class="opt-separator" style="margin-top:10px"><span>Personalizadas</span></div>` + custom.map(rowHtml).join('')
+      ? `<div class="opt-separator" style="margin-top:10px"><span>Personalizadas</span></div>` +
+        custom.map(rowHtml).join('')
       : '');
+
+  // Atualiza linha de status do Tesouro após re-render
+  requestAnimationFrame(renderTreasuryStatus);
 }
 
 /* ── Inputs ──────────────────────────────────────────────── */

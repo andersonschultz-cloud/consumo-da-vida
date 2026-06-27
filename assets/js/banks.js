@@ -63,8 +63,9 @@ function _buildSub(bank) {
   if (!bank.derive) return '';
   switch (bank.derive.base) {
     case 'cdi':      return ((bank.derive.factor || 1) * 100).toFixed(0) + '% do CDI';
-    case 'selicAdd': return 'Selic + ' + (bank.derive.add || 0).toString().replace('.', ',') + '%';
-    case 'manual':   return (bank.derive.rate || 0).toFixed(2).replace('.', ',') + '% a.a.';
+    case 'selicAdd': return 'Selic + ' + (bank.derive.add || 0).toFixed(4).replace(/\.?0+$/, '').replace('.', ',') + '%';
+    case 'manual':   return (bank.derive.rate || 0).toFixed(2).replace('.', ',') + '% a.a. (prefixado)';
+    case 'ipcaPlus': return 'IPCA + ' + (bank.derive.realRate || 0).toFixed(2).replace('.', ',') + '% real';
     case 'poupanca': return poupSub(SELIC_FALLBACK);
     default:         return '';
   }
@@ -94,8 +95,8 @@ function _hardcodedFallback(selic) {
     { id:'nubank',  name:'Nubank',             sub:'100% do CDI',     color:'#820AD1', taxable:true,  on:true, derive:{base:'cdi',factor:1},        logo:'https://logo.clearbit.com/nubank.com.br',     product:'Conta Remunerada Nubank — CDB liq. diária',   rate:round2(cdiFromSelic(s)) },
     { id:'santander',name:'Santander',         sub:'100% do CDI',     color:'#CC0000', taxable:true,  on:true, derive:{base:'cdi',factor:1},        logo:'https://logo.clearbit.com/santander.com.br',  product:'CDB DI Santander — liq. diária',              rate:round2(cdiFromSelic(s)) },
     { id:'itau',    name:'Itaú',               sub:'100% do CDI',     color:'#F47A20', taxable:true,  on:true, derive:{base:'cdi',factor:1},        logo:'https://logo.clearbit.com/itau.com.br',       product:'CDB DI Itaú — liq. diária',                   rate:round2(cdiFromSelic(s)) },
-    { id:'selic24', name:'Tesouro Selic 2031', sub:'Selic + 0,07%', color:'#2563EB', taxable:true,  on:true, derive:{base:'selicAdd',add:0.07}, logo:'https://logo.clearbit.com/tesourodireto.com.br', product:'Título público federal — Tesouro Direto',   rate:round2(s+0.07) },
-    { id:'selic27', name:'Tesouro Prefixado 2029', sub:'14.24%', color:'#4F46E5', taxable:true,  on:true, derive:{base:'selicAdd',add:0.3433}, logo:'https://logo.clearbit.com/tesourodireto.com.br', product:'Título público federal — Tesouro Direto',   rate:round2(14.24) },
+    { id:'selic24', name:'Tesouro Selic 2024', sub:'Selic + 0,1806%', color:'#2563EB', taxable:true,  on:true, derive:{base:'selicAdd',add:0.1806}, logo:'https://logo.clearbit.com/tesourodireto.com.br', product:'Título público federal — Tesouro Direto',   rate:round2(s+0.1806) },
+    { id:'selic27', name:'Tesouro Selic 2027', sub:'Selic + 0,3433%', color:'#4F46E5', taxable:true,  on:true, derive:{base:'selicAdd',add:0.3433}, logo:'https://logo.clearbit.com/tesourodireto.com.br', product:'Título público federal — Tesouro Direto',   rate:round2(s+0.3433) },
     { id:'poupanca',name:'Poupança',           sub:poupSub(s),        color:'#D97706', taxable:false, on:true, derive:{base:'poupanca'},            logo:null,                                          product:'Conta poupança — qualquer banco',              rate:round2(deriveRate({base:'poupanca'},s)) },
   ];
 }
