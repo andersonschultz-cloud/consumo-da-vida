@@ -43,13 +43,16 @@ applyTheme();
 
 /* ── Navegação SPA ──────────────────────────────────────── */
 function navTo(page) {
+  const navLinks = document.getElementById('navLinks');
+  const navToggle = document.querySelector('.nav-toggle');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const pg = document.getElementById('page-' + page);
   pg.classList.add('active');
   document.querySelectorAll('.nav-link').forEach(l =>
     l.classList.toggle('active', l.dataset.nav === page)
   );
-  document.getElementById('navLinks').classList.remove('open');
+  if (navLinks) navLinks.classList.remove('open');
+  if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
   localStorage.setItem('cdv-page', page);
   window.scrollTo({ top: 0, behavior: 'smooth' });
   // WCAG SC 2.4.3: mover foco para o heading ao navegar
@@ -61,8 +64,36 @@ function navTo(page) {
 }
 
 function toggleMenu() {
-  document.getElementById('navLinks').classList.toggle('open');
+  const navLinks = document.getElementById('navLinks');
+  const navToggle = document.querySelector('.nav-toggle');
+  if (!navLinks) return;
+
+  const isOpen = navLinks.classList.toggle('open');
+  if (navToggle) navToggle.setAttribute('aria-expanded', String(isOpen));
 }
+
+// Fecha o menu mobile ao tocar fora dele ou ao pressionar ESC.
+document.addEventListener('click', (event) => {
+  const navLinks = document.getElementById('navLinks');
+  const navToggle = document.querySelector('.nav-toggle');
+  if (!navLinks || !navLinks.classList.contains('open')) return;
+
+  const clickedInsideMenu = navLinks.contains(event.target);
+  const clickedToggle = navToggle && navToggle.contains(event.target);
+
+  if (!clickedInsideMenu && !clickedToggle) {
+    navLinks.classList.remove('open');
+    if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  const navLinks = document.getElementById('navLinks');
+  const navToggle = document.querySelector('.nav-toggle');
+  if (navLinks) navLinks.classList.remove('open');
+  if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+});
 
 /* ── Modal QDP ──────────────────────────────────────────── */
 function openModal(nome, horas, vp, quote) {

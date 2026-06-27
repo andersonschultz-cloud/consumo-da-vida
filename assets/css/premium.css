@@ -673,3 +673,49 @@ footer::before {
 .tool-card.tc-sim::before { background: linear-gradient(90deg, var(--azul), var(--azul-lt)); }
 [data-theme="dark"] .tc-sim .tool-cta,
 [data-theme="light"] .tc-sim .tool-cta { color: var(--azul-lt); }
+
+
+/* Correção menu mobile: garante que o dropdown fique acima do conteúdo e receba toque */
+@media (max-width: 780px) {
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 3000;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 62px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    z-index: 3001;
+    display: flex;
+    transform: translateY(-140%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .nav-link {
+    position: relative;
+    z-index: 3002;
+    width: 100%;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .nav-toggle {
+    position: relative;
+    z-index: 3003;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+}
