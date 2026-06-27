@@ -1,43 +1,36 @@
-# 💰 Consumo da Vida
+# 💰 Consumo da Vida — v5.0
 
-**Plataforma de Inteligência Financeira** — três ferramentas integradas para educação financeira consciente.
+**Hub de Inteligência Financeira para educação financeira consciente.**
 
-🌐 **Live:** [consumodavida.com.br](https://consumodavida.com.br)
-
----
+🌐 **[consumodavida.com.br](https://consumodavida.com.br)**
 
 ## Ferramentas
 
-| Ferramenta | O que faz |
-|---|---|
-| 🕐 **Calculadora de Vida** | Converte preço em horas/dias de trabalho real. Método QDP. |
-| 📊 **Planejador de Compras** | Avalia peso da compra na renda, plano de economia, projeção de desconto. |
-| 📈 **Simulador de Rendimentos** | Juros compostos com Selic ao vivo (Banco Central). Linha do tempo arrastável. |
+| | Ferramenta | O que faz |
+|---|---|---|
+| 🕐 | **Calculadora de Vida** | Converte preço em horas/dias de trabalho. Método QDP. |
+| 📊 | **Planejador de Compras** | Avalia peso da compra, plano de economia, desconto à vista. |
+| 📈 | **Simulador de Rendimentos** | Juros compostos com Selic ao vivo + 8 instituições + comparison cards. |
 
-## Stack
+## Estrutura do projeto
 
-- HTML + CSS + Vanilla JS (single-file SPA, zero build step)
-- Chart.js 4.4.1 via CDN
-- Tipografia: DM Sans · DM Serif Display · DM Mono (Google Fonts)
-- Dados em tempo real: [api.bcb.gov.br](https://api.bcb.gov.br) (Selic)
-- Deploy: GitHub Pages + domínio personalizado
+```
+assets/css/        → Design System modular (4 arquivos)
+assets/js/         → Módulos JavaScript (9 arquivos)
+assets/data/       → banks.json (fonte de dados dos bancos)
+assets/img/logo/   → Logo da plataforma
+docs/              → Arquitetura e changelog
+```
+
+## Adicionar um banco
+
+Edite apenas `assets/data/banks.json` — nenhum código precisa ser alterado.
 
 ## Deploy
 
 ```bash
-git add .
-git commit -m "deploy: Consumo da Vida vX.X"
-git push origin main
+git add -A && git commit -m "descrição" && git push origin main
 ```
 
-GitHub Pages publica automaticamente. DNS já configurado para `consumodavida.com.br`.
-
-## Design System
-
-- Paleta v4.0 auditada WCAG AA/AAA
-- Modo claro e escuro (`prefers-color-scheme` + toggle manual)
-- Acessibilidade: skip link, ARIA roles, focus-visible, aria-live, prefers-reduced-motion
-
 ---
-
-Desenvolvido por [Anderson Schultz Ribeiro](https://www.linkedin.com/in/anderson-schultz-ribeiro0001/)
+Desenvolvido por [Anderson Schultz Ribeiro](https://linkedin.com/in/anderson-schultz-ribeiro0001)
