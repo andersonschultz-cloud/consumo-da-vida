@@ -24,3 +24,11 @@ Executado em 24/07/2026.
 - Respeito a `prefers-reduced-motion`.
 
 > Testes automatizados em Chromium não substituem testes físicos em todas as versões do Safari iOS, mas o CSS/JS foi preparado especificamente para as limitações comuns do Safari móvel.
+
+## Validação v6.2 — Connected Light Field
+- `node --check` executado em todos os JavaScript do projeto: sem erros de sintaxe.
+- Validada a presença do Canvas `connectivityCanvas`, carregamento de `connectivity.js` e regras específicas para temas claro/escuro.
+- Validado respeito a `prefers-reduced-motion`.
+- Implementado limite de DPR, densidade de nós e FPS reduzido para dispositivos touch/iPhone.
+- Implementada pausa de animação em aba oculta para reduzir consumo.
+- Tentativa de captura headless via Chromium não concluiu de forma confiável no ambiente; portanto, não foi contabilizada como teste visual aprovado.

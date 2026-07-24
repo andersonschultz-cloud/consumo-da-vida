@@ -94,3 +94,13 @@
 - Novo fundo vivo futurista com grid em perspectiva, rede pulsante e orbes de luz em movimento.
 - Animações ajustadas para Safari/iPhone e respeitando `prefers-reduced-motion`.
 - Menu mobile e footer receberam variantes claras dedicadas.
+
+## v6.2 — Connected Light Field
+- Novo fundo vivo em Canvas com nós luminosos conectados por linhas dinâmicas.
+- Pulsação independente de brilho e tamanho para criar sensação orgânica de conectividade.
+- Paleta e intensidade adaptadas automaticamente aos temas claro e escuro.
+- Interação sutil com o ponteiro em desktop; versão econômica em touch/iPhone.
+- Limite de densidade, DPR e FPS para reduzir custo de GPU/bateria em smartphones.
+- Pausa automática quando a aba fica em segundo plano e respeito a `prefers-reduced-motion`.
+- Reforço de legibilidade no tema claro com superfícies translúcidas de alto contraste e halo de leitura no hero.
+- Ajustes de glass/backdrop para aproximar o site do mockup visual aprovado.

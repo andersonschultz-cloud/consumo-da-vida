@@ -370,3 +370,129 @@ body::after {
 @media (prefers-reduced-motion:reduce) {
   body::after,.ambient-network,.ambient-network::before,.ambient-network::after { animation:none !important; }
 }
+
+/* ===================================================================
+   v6.2 — Connected Light Field
+   Fundo vivo inspirado na identidade aprovada: nós luminosos conectados,
+   pulsação orgânica e profundidade futurista em claro e escuro.
+=================================================================== */
+.connectivity-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .92;
+  transform: translateZ(0);
+  will-change: contents;
+}
+
+/* A rede SVG vira uma textura de profundidade; o canvas faz o movimento principal. */
+.ambient-network {
+  opacity: .22 !important;
+  filter: saturate(.9) brightness(.96);
+  mix-blend-mode: screen;
+}
+
+/* O grid anterior é mantido apenas como detalhe quase imperceptível. */
+body::after {
+  opacity: .16;
+  animation-duration: 34s;
+}
+
+/* Glow ambiental amplo para dar volume sem competir com o conteúdo. */
+body::before {
+  background:
+    radial-gradient(circle at 74% 16%, rgba(21,139,255,.15), transparent 30%),
+    radial-gradient(circle at 12% 64%, rgba(55,200,255,.075), transparent 34%),
+    radial-gradient(circle at 54% 92%, rgba(25,117,255,.055), transparent 32%),
+    linear-gradient(180deg,#020712 0%,#04101d 46%,#030914 100%);
+}
+
+/* Glass escuro: a conectividade aparece ao redor, não em cima das letras. */
+[data-theme="dark"] .quick-tools,
+[data-theme="dark"] .dashboard-card,
+[data-theme="dark"] .method-grid article,
+[data-theme="dark"] .principles-strip,
+[data-theme="dark"] .card,
+[data-theme="dark"] .metric-card,
+[data-theme="dark"] .sim-card,
+[data-theme="dark"] .modal {
+  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+  backdrop-filter: blur(18px) saturate(1.12);
+}
+
+/* Tema claro: rede visível, mas superfícies têm isolamento suficiente para leitura. */
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(circle at 74% 12%, rgba(32,143,242,.085), transparent 30%),
+    radial-gradient(circle at 14% 66%, rgba(65,183,235,.055), transparent 32%),
+    radial-gradient(circle at 52% 96%, rgba(42,134,224,.04), transparent 30%),
+    linear-gradient(180deg,#fbfdff 0%,#f5f9fd 45%,#edf4fa 100%);
+}
+[data-theme="light"] body::after { opacity:.075; }
+[data-theme="light"] .ambient-network {
+  opacity:.065 !important;
+  filter:saturate(.62) contrast(.76);
+  mix-blend-mode:multiply;
+}
+[data-theme="light"] .connectivity-canvas { opacity:.86; }
+
+[data-theme="light"] .quick-tools,
+[data-theme="light"] .dashboard-card,
+[data-theme="light"] .method-grid article,
+[data-theme="light"] .principles-strip,
+[data-theme="light"] .card,
+[data-theme="light"] .metric-card,
+[data-theme="light"] .sim-card,
+[data-theme="light"] .modal {
+  background-color: rgba(255,255,255,.91) !important;
+  -webkit-backdrop-filter: blur(19px) saturate(1.05);
+  backdrop-filter: blur(19px) saturate(1.05);
+  box-shadow: 0 16px 48px rgba(29,76,112,.075);
+}
+
+/* Hero: halo de leitura invisível nas bordas, especialmente no tema claro. */
+.hero-copy::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-36px -54px -36px -42px;
+  border-radius:42px;
+  background:radial-gradient(ellipse at 38% 50%, rgba(3,9,20,.58) 0%, rgba(3,9,20,.26) 48%, transparent 74%);
+  filter:blur(4px);
+  pointer-events:none;
+}
+[data-theme="light"] .hero-copy::before {
+  background:radial-gradient(ellipse at 38% 50%, rgba(251,253,255,.97) 0%, rgba(248,252,255,.84) 50%, rgba(248,252,255,0) 76%);
+}
+
+/* Pequena pulsação no glow da marca, sincronizando visualmente com a rede. */
+.hero-glow { animation:brandGlowBreath 6.8s ease-in-out infinite; }
+.eyebrow-dot { animation:brandNodeBreath 3.8s ease-in-out infinite; }
+@keyframes brandGlowBreath {
+  0%,100% { opacity:.11; transform:scale(.94); }
+  50% { opacity:.23; transform:scale(1.08); }
+}
+@keyframes brandNodeBreath {
+  0%,100% { box-shadow:0 0 8px var(--brand-cyan); opacity:.68; }
+  50% { box-shadow:0 0 22px var(--brand-cyan),0 0 42px rgba(55,200,255,.42); opacity:1; }
+}
+
+@media (max-width: 860px) {
+  .connectivity-canvas { opacity:.80; }
+  [data-theme="light"] .connectivity-canvas { opacity:.70; }
+  .hero-copy::before { inset:-20px -20px -20px -20px; }
+}
+
+@supports (-webkit-touch-callout:none) {
+  .connectivity-canvas { opacity:.82; }
+  [data-theme="light"] .connectivity-canvas { opacity:.68; }
+  .ambient-network { opacity:.12 !important; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .hero-glow,.eyebrow-dot { animation:none !important; }
+  .connectivity-canvas { opacity:.55; }
+}

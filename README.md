@@ -40,3 +40,6 @@ Desenvolvido por [Anderson Schultz Ribeiro](https://linkedin.com/in/anderson-sch
 ## v6.0 — identidade premium
 
 Nova identidade Instituto Schultz, hero com raposa abstrata, dashboard premium, Método QDP, refinamento completo para desktop e iPhone e fallbacks de robustez. Veja `docs/testes-v6.md`.
+
+### Fundo vivo v6.2
+A camada `assets/js/connectivity.js` desenha uma rede animada de nós luminosos em Canvas. O efeito adapta cores e intensidade ao tema, reduz carga gráfica em dispositivos touch/iOS e respeita a preferência de redução de movimento do sistema.
