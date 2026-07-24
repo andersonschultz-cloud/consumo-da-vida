@@ -133,3 +133,10 @@
 - Removed the extra blue container/ring styling from header and footer so the logo reads as a single clean circular mark.
 - Preserved the animated hero depth, pulse, glow and interaction while preventing a duplicate hard circular frame.
 - Kept favicons and application icons unchanged to avoid unintended PWA/cache regressions.
+
+## v6.7 — Premium Icon System & Editorial Polish
+- Novo sistema vetorial autoral de ícones para Calculadora, Planejador, Simulador, QDP e métricas da home.
+- Estados hover/touch com brilho e microinteração, sem dependência de biblioteca externa.
+- Ícones adaptados para temas claro/escuro e redução de movimento.
+- Remoção de emojis decorativos em áreas funcionais para maior consistência visual.
+- Revisão editorial dos textos principais para linguagem mais institucional, clara e premium.
