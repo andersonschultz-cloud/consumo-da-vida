@@ -719,3 +719,222 @@ footer::before {
     touch-action: manipulation;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   v5.1 — Light theme readability + living futuristic background
+   Mantém o movimento atrás do conteúdo sem competir com a leitura.
+════════════════════════════════════════════════════════════════ */
+
+/* Camada viva adicional: malha luminosa de baixa opacidade. */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: -22vmax;
+  pointer-events: none;
+  z-index: -3;
+  will-change: transform, opacity;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(0, 180, 255, .13) 0 8%, transparent 28%),
+    radial-gradient(circle at 78% 18%, rgba(0, 213, 255, .09) 0 7%, transparent 26%),
+    radial-gradient(circle at 62% 78%, rgba(0, 121, 183, .10) 0 8%, transparent 28%),
+    radial-gradient(circle at 18% 76%, rgba(0, 191, 208, .075) 0 7%, transparent 25%);
+  filter: blur(22px);
+  animation: livingMesh 30s ease-in-out infinite alternate;
+}
+
+body::after {
+  opacity: .22;
+  background-image:
+    linear-gradient(rgba(52, 184, 235, .11) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 184, 235, .11) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(circle at 50% 42%, #000 0%, rgba(0,0,0,.82) 38%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle at 50% 42%, #000 0%, rgba(0,0,0,.82) 38%, transparent 72%);
+  transform: perspective(850px) rotateX(58deg) translateY(25vh) scale(1.25);
+  transform-origin: center;
+  animation: livingGrid 22s linear infinite;
+}
+
+@keyframes livingMesh {
+  0%   { transform: translate3d(-2.5%, -1.5%, 0) rotate(-1deg) scale(1); }
+  50%  { transform: translate3d(2%, 1%, 0) rotate(1deg) scale(1.035); }
+  100% { transform: translate3d(4%, -2%, 0) rotate(-.5deg) scale(1.02); }
+}
+
+@keyframes livingGrid {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 54px 54px, 54px 54px; }
+}
+
+/* O SVG da rede continua se movendo, mas ganha profundidade sem cobrir textos. */
+.ambient-network {
+  opacity: .62;
+  mix-blend-mode: screen;
+  animation: networkDrift 18s ease-in-out infinite alternate;
+}
+
+.ambient-network::before { animation-duration: 12s; }
+.ambient-network::after  { animation-duration: 16s; }
+
+/* ── Tema claro: contraste controlado e superfícies mais sólidas ── */
+[data-theme="light"] {
+  --bg: #f4f8fb;
+  --bg2: #e9f1f6;
+  --surface: rgba(255, 255, 255, .96);
+  --surface2: rgba(249, 252, 254, .97);
+  --text: #071521;
+  --text2: #253f52;
+  --text3: #526d7f;
+  --border: rgba(18, 92, 126, .22);
+  --border2: rgba(18, 92, 126, .14);
+  --border-ctrl: rgba(18, 92, 126, .34);
+  --shadow: 0 10px 30px rgba(16, 63, 88, .09), 0 1px 0 rgba(255,255,255,.95) inset;
+  --shadow-lg: 0 24px 70px rgba(15, 64, 90, .13), 0 1px 0 rgba(255,255,255,.96) inset;
+}
+
+[data-theme="light"] body {
+  background: linear-gradient(180deg, #f7fbfd 0%, #eef5f9 52%, #f5f9fb 100%);
+}
+
+[data-theme="light"] body::before {
+  opacity: .72;
+  background:
+    radial-gradient(circle at 12% 22%, rgba(0, 143, 202, .115) 0 7%, transparent 26%),
+    radial-gradient(circle at 84% 18%, rgba(0, 159, 179, .085) 0 7%, transparent 24%),
+    radial-gradient(circle at 70% 82%, rgba(0, 113, 164, .08) 0 8%, transparent 27%),
+    radial-gradient(circle at 16% 78%, rgba(0, 180, 210, .065) 0 7%, transparent 24%);
+  filter: blur(32px);
+}
+
+[data-theme="light"] body::after {
+  opacity: .095;
+  background-image:
+    linear-gradient(rgba(0, 111, 159, .18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 111, 159, .18) 1px, transparent 1px);
+}
+
+[data-theme="light"] .ambient-network {
+  opacity: .16;
+  mix-blend-mode: multiply;
+  filter: saturate(.75) contrast(.88);
+}
+
+/* Uma película clara sob blocos de conteúdo impede a arte de fundo de atravessar o texto. */
+[data-theme="light"] .home-hero,
+[data-theme="light"] .tool-header {
+  position: relative;
+}
+
+[data-theme="light"] .home-hero::before,
+[data-theme="light"] .tool-header::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 8% -8% 0;
+  border-radius: 44px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,.92) 0%, rgba(255,255,255,.70) 48%, transparent 78%);
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+[data-theme="light"] .topnav {
+  background: rgba(248, 252, 254, .94);
+  border-bottom-color: rgba(18, 92, 126, .15);
+}
+
+[data-theme="light"] .nav-links {
+  background: rgba(255, 255, 255, .86);
+}
+
+[data-theme="light"] .tool-card,
+[data-theme="light"] .card,
+[data-theme="light"] .cmp-card,
+[data-theme="light"] .reflection-card,
+[data-theme="light"] .cross-cta,
+[data-theme="light"] .metric-card,
+[data-theme="light"] .plan-metric,
+[data-theme="light"] .scenario-card,
+[data-theme="light"] .discount-card,
+[data-theme="light"] .qdp-step,
+[data-theme="light"] .cdi-box,
+[data-theme="light"] .ir-toggle,
+[data-theme="light"] .ipca-row,
+[data-theme="light"] .opt-row,
+[data-theme="light"] .custom-form,
+[data-theme="light"] .sim-disclaimer,
+[data-theme="light"] .sim-selic-card,
+[data-theme="light"] .sim-hero-card,
+[data-theme="light"] .sim-chart-wrap,
+[data-theme="light"] .home-pillar,
+[data-theme="light"] .benefit-ico {
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(18px) saturate(112%);
+  -webkit-backdrop-filter: blur(18px) saturate(112%);
+}
+
+[data-theme="light"] .tool-card,
+[data-theme="light"] .card,
+[data-theme="light"] .cmp-card,
+[data-theme="light"] .reflection-card,
+[data-theme="light"] .cross-cta {
+  border-color: rgba(15, 91, 127, .18);
+  box-shadow: 0 16px 44px rgba(20, 66, 90, .095), 0 1px 0 rgba(255,255,255,.96) inset;
+}
+
+[data-theme="light"] .home-hero h1,
+[data-theme="light"] .tool-header h1,
+[data-theme="light"] .tools-heading h2,
+[data-theme="light"] .tool-card h3,
+[data-theme="light"] .benefit h4,
+[data-theme="light"] .card h2,
+[data-theme="light"] .card h3 {
+  color: #071521;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+
+[data-theme="light"] .home-hero p,
+[data-theme="light"] .tool-header p,
+[data-theme="light"] .tools-heading p,
+[data-theme="light"] .tool-card p,
+[data-theme="light"] .benefit p,
+[data-theme="light"] .field-label,
+[data-theme="light"] .microcopy,
+[data-theme="light"] .sim-disclaimer {
+  color: #2c485b;
+}
+
+[data-theme="light"] input[type=text],
+[data-theme="light"] input[type=number],
+[data-theme="light"] .money-input-plain,
+[data-theme="light"] select,
+[data-theme="light"] .money-prefix,
+[data-theme="light"] .ipca-input-wrap input {
+  background: #fff;
+  color: #071521;
+  border-color: rgba(19, 91, 126, .28);
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset;
+}
+
+[data-theme="light"] input::placeholder { color: #71889a; opacity: 1; }
+
+/* iOS/Safari: animações suaves, sem provocar repaints excessivos. */
+@supports (-webkit-touch-callout: none) {
+  body::before { filter: blur(38px); }
+  .ambient-network { transform: translateZ(0); }
+}
+
+/* Respeita a preferência de acessibilidade do sistema. */
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .ambient-network,
+  .ambient-network::before,
+  .ambient-network::after {
+    animation: none !important;
+    transform: none;
+  }
+}

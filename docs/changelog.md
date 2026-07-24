@@ -1,4 +1,13 @@
-# Changelog — Consumo da Vida
+# Changelog
+
+## v5.1 — tema claro e fundo vivo
+- Reequilíbrio completo do tema claro para melhorar contraste e legibilidade.
+- Superfícies claras mais sólidas para impedir que os elementos do fundo atravessem textos e formulários.
+- Novo fundo vivo com malha, grade em perspectiva, rede tecnológica e orbes animados.
+- Movimento otimizado para desktop e smartphones, incluindo ajustes para Safari/iPhone.
+- Suporte a `prefers-reduced-motion` para acessibilidade.
+
+ — Consumo da Vida
 
 ## v5.1.0 — Identidade Premium Azul Tecnológico (2026-06)
 
@@ -76,13 +85,3 @@
 
 - Calculadora de Vida com Método QDP
 - Simulador de Rendimentos standalone
-
-## v6.0 — 24/07/2026
-- Nova identidade visual Instituto Schultz aplicada ao Consumo da Vida.
-- Nova raposa abstrata em linguagem financeira/tecnológica.
-- Home reconstruída com hero premium, ferramentas rápidas, dashboard, Método QDP e princípios.
-- Nova camada `assets/css/brand-v6.css` para preservar a lógica existente e reduzir risco de regressão.
-- Melhorias específicas de Safari/iPhone: safe-area, `dvh`, `visualViewport`, inputs 16px e touch targets.
-- Fallback de gráficos Canvas quando Chart.js não carregar.
-- Clipboard com fallback e navegação mais defensiva.
-- Testes funcionais desktop/mobile sem overflow horizontal e sem erros JavaScript nos fluxos cobertos.
