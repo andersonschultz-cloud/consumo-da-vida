@@ -76,3 +76,13 @@
 
 - Calculadora de Vida com Método QDP
 - Simulador de Rendimentos standalone
+
+## v6.0 — 24/07/2026
+- Nova identidade visual Instituto Schultz aplicada ao Consumo da Vida.
+- Nova raposa abstrata em linguagem financeira/tecnológica.
+- Home reconstruída com hero premium, ferramentas rápidas, dashboard, Método QDP e princípios.
+- Nova camada `assets/css/brand-v6.css` para preservar a lógica existente e reduzir risco de regressão.
+- Melhorias específicas de Safari/iPhone: safe-area, `dvh`, `visualViewport`, inputs 16px e touch targets.
+- Fallback de gráficos Canvas quando Chart.js não carregar.
+- Clipboard com fallback e navegação mais defensiva.
+- Testes funcionais desktop/mobile sem overflow horizontal e sem erros JavaScript nos fluxos cobertos.
