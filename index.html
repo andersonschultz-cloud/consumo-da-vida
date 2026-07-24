@@ -118,7 +118,7 @@
   <!-- ═══ NAVEGAÇÃO ═══ -->
   <nav class="topnav premium-nav" aria-label="Navegação principal">
     <button class="nav-brand" onclick="navTo('home')" aria-label="Início — Instituto Schultz, Consumo da Vida">
-      <img class="nav-logo" src="assets/img/logo/logo-schultz.png" alt="Símbolo Instituto Schultz">
+      <span class="nav-logo-frame" aria-hidden="true"><img class="nav-logo" src="assets/img/logo/logo-schultz.png" alt=""></span>
       <div class="nav-brand-text brand-lockup">
         <span class="brand-institute">INSTITUTO</span>
         <span class="brand-schultz">SCHULTZ</span>
@@ -164,7 +164,21 @@
       <div class="hero-visual" aria-hidden="true">
         <div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div>
         <div class="hero-bars"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <img src="assets/img/logo/logo-schultz.png" alt="" class="hero-fox">
+
+        <div class="hero-emblem" id="heroEmblem">
+          <div class="hero-emblem-aura"></div>
+          <div class="hero-emblem-ring ring-outer"></div>
+          <div class="hero-emblem-ring ring-inner"></div>
+          <div class="hero-emblem-shell">
+            <img src="assets/img/logo/logo-schultz.png" alt="" class="hero-fox">
+            <span class="hero-emblem-shine"></span>
+          </div>
+          <span class="hero-node node-1"></span>
+          <span class="hero-node node-2"></span>
+          <span class="hero-node node-3"></span>
+          <span class="hero-node node-4"></span>
+        </div>
+
         <div class="hero-circuit c1"></div><div class="hero-circuit c2"></div><div class="hero-circuit c3"></div>
         <div class="hero-glow"></div>
       </div>
@@ -521,7 +535,7 @@
   <footer class="premium-footer">
     <div class="footer-main">
       <div class="footer-brand-block">
-        <img class="footer-logo" src="assets/img/logo/logo-schultz.png" alt="Instituto Schultz">
+        <span class="footer-logo-frame" aria-hidden="true"><img class="footer-logo" src="assets/img/logo/logo-schultz.png" alt=""></span>
         <div><span>INSTITUTO</span><strong>SCHULTZ</strong><small>Consumo da Vida · Inteligência Financeira</small></div>
       </div>
       <div class="footer-pillars">Finanças · Tecnologia · Futuro</div>
@@ -547,6 +561,7 @@
   <script src="assets/js/simulator.js"></script>
   <script src="assets/js/ui.js"></script>
   <script src="assets/js/connectivity.js"></script>
+  <script src="assets/js/hero-emblem.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>

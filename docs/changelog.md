@@ -104,3 +104,26 @@
 - Pausa automática quando a aba fica em segundo plano e respeito a `prefers-reduced-motion`.
 - Reforço de legibilidade no tema claro com superfícies translúcidas de alto contraste e halo de leitura no hero.
 - Ajustes de glass/backdrop para aproximar o site do mockup visual aprovado.
+
+## v6.3 — Mobile Theme + Circular Logo + QA
+
+- Corrigido o logo do cabeçalho e rodapé para manter composição circular com `object-fit: contain`, recuo interno e máscara circular, evitando cortes no topo e na base.
+- Botão de alternância de tema agora permanece visível em smartphones e iPhone, inclusive em larguras pequenas.
+- Ajustados espaçamentos da navegação mobile para acomodar logo, marca, tema e menu sem overflow.
+- Mantido o fundo vivo de conectividade nos temas claro e escuro.
+- Executada validação de sintaxe JavaScript, IDs/handlers do DOM, integridade básica do CSS e testes das fórmulas financeiras do simulador.
+
+## v6.4 — Logo Option 2
+- Reworked header and footer logo into a dedicated circular containment surface.
+- Removed clipping from the fox artwork itself; the circular shape now belongs to the frame, not to the image mask.
+- Added restrained cyan/blue glow and inner ring in dark mode.
+- Added a lighter glass/ice containment treatment for light mode.
+- Tuned logo scale independently for desktop, tablet and small iPhones so no part of the artwork is cut.
+
+## v6.5 — Hero circular living emblem
+- Ajuste exclusivo do logo principal da home; logo do menu permanece inalterado.
+- Emblema principal agora é circular, com contenção real e sem cortes.
+- Adicionado anel luminoso pulsante, aura, brilho móvel e nós de conectividade.
+- Adicionado efeito de profundidade/tilt sutil com ponteiro em desktop.
+- Mobile usa animações mais leves e respeita `prefers-reduced-motion`.
+- Tema claro recebe versão própria do glow para preservar contraste e legibilidade.

@@ -43,3 +43,8 @@ Nova identidade Instituto Schultz, hero com raposa abstrata, dashboard premium, 
 
 ### Fundo vivo v6.2
 A camada `assets/js/connectivity.js` desenha uma rede animada de nós luminosos em Canvas. O efeito adapta cores e intensidade ao tema, reduz carga gráfica em dispositivos touch/iOS e respeita a preferência de redução de movimento do sistema.
+
+### v6.3
+Correção do logo circular, retorno do seletor de tema no mobile e nova rodada de QA estrutural/financeiro. Consulte `docs/testes-v6.3.md`.
+> **v6.5:** emblema principal da home redesenhado como logo circular vivo, com glow, profundidade e interação sutil. O logo do menu não foi alterado.
+
