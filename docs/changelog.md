@@ -127,3 +127,9 @@
 - Adicionado efeito de profundidade/tilt sutil com ponteiro em desktop.
 - Mobile usa animações mais leves e respeita `prefers-reduced-motion`.
 - Tema claro recebe versão própria do glow para preservar contraste e legibilidade.
+
+## v6.6 — Circular logo clean finish
+- Replaced the visible header, hero and footer artwork with the approved circular logo without text.
+- Removed the extra blue container/ring styling from header and footer so the logo reads as a single clean circular mark.
+- Preserved the animated hero depth, pulse, glow and interaction while preventing a duplicate hard circular frame.
+- Kept favicons and application icons unchanged to avoid unintended PWA/cache regressions.

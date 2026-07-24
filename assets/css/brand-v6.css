@@ -871,3 +871,93 @@ body::before {
   .hero-node { animation:none!important; }
   .hero-emblem-shell { transform:none!important; }
 }
+
+/* ==========================================================
+   v6.6 — LOGO CLEAN FINISH + NEW CIRCULAR ARTWORK
+   Uses the approved circular artwork in header, hero and footer.
+   Header/footer frames are intentionally minimal: the artwork
+   provides its own circle, so no extra blue square/ring is added.
+   ========================================================== */
+.nav-logo-frame,
+.footer-logo-frame {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible;
+}
+.nav-logo-frame::before,
+.nav-logo-frame::after,
+.footer-logo-frame::before,
+.footer-logo-frame::after {
+  display: none !important;
+  content: none !important;
+}
+.nav-logo-frame .nav-logo,
+.footer-logo-frame .footer-logo {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  clip-path: none !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,.22)) !important;
+}
+.nav-brand:hover .nav-logo-frame {
+  border:0 !important;
+  box-shadow:none !important;
+  transform:translateY(-1px);
+}
+[data-theme="light"] .nav-logo-frame,
+[data-theme="light"] .footer-logo-frame {
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+[data-theme="light"] .nav-logo-frame .nav-logo,
+[data-theme="light"] .footer-logo-frame .footer-logo {
+  filter:drop-shadow(0 5px 10px rgba(16,62,99,.16)) !important;
+}
+
+/* Approved hero artwork already contains its own circular border.
+   Keep the living depth effects around it, but avoid a second hard circle. */
+.hero-emblem-shell {
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:
+    0 34px 76px rgba(0,0,0,.38),
+    0 0 48px rgba(0,145,255,.22),
+    0 0 110px rgba(0,119,255,.10) !important;
+  overflow:visible;
+}
+.hero-emblem .hero-fox {
+  object-fit:contain !important;
+  clip-path:none !important;
+  border-radius:50% !important;
+  transform:scale(.96) translateZ(18px);
+  filter:drop-shadow(0 20px 34px rgba(0,0,0,.34));
+}
+.hero-emblem-ring.ring-inner { opacity:.38; }
+.hero-emblem-ring.ring-outer {
+  width:92%;
+  border-color:rgba(55,200,255,.42);
+  opacity:.72;
+}
+[data-theme="light"] .hero-emblem-shell {
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:
+    0 26px 56px rgba(23,77,120,.12),
+    0 0 34px rgba(8,129,215,.12),
+    0 0 86px rgba(24,139,220,.07) !important;
+}
+[data-theme="light"] .hero-emblem-ring.ring-outer { opacity:.48; }
+
+@media (max-width:860px){
+  .nav-logo-frame{width:46px;height:46px}
+  .footer-logo-frame{width:44px;height:44px}
+}
+@media (max-width:390px){
+  .nav-logo-frame{width:42px;height:42px}
+}
