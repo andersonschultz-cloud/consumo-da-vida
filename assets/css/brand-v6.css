@@ -143,3 +143,230 @@ input,select,textarea,.money-prefix { min-height:46px; border-radius:9px !import
 }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition-duration:.01ms!important}.premium-hero::before{display:none}}
 @supports (-webkit-touch-callout:none){.topnav.premium-nav{-webkit-backdrop-filter:blur(16px)}button,input,select{-webkit-tap-highlight-color:transparent}.hero-primary,.hero-secondary,.btn-calc{transform:translateZ(0)}}
+
+/* ===================================================================
+   v6.1 — Light Theme Readability + Living Futuristic Background
+   Objetivos:
+   1) o fundo nunca competir com o conteúdo no tema claro;
+   2) manter contraste forte e superfícies premium;
+   3) adicionar movimento ambiental suave, inclusive no iPhone/Safari.
+=================================================================== */
+
+/* Plano de fundo vivo: camadas sempre atrás do conteúdo */
+body::after {
+  content:"";
+  position:fixed;
+  inset:-12%;
+  z-index:-2;
+  pointer-events:none;
+  opacity:.46;
+  background:
+    linear-gradient(rgba(57,171,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57,171,255,.045) 1px, transparent 1px),
+    radial-gradient(circle at 18% 22%, rgba(27,151,255,.16), transparent 24%),
+    radial-gradient(circle at 82% 70%, rgba(55,200,255,.11), transparent 25%);
+  background-size:52px 52px,52px 52px,100% 100%,100% 100%;
+  transform:perspective(900px) rotateX(64deg) translate3d(0,7%,0) scale(1.16);
+  transform-origin:center bottom;
+  animation:futureGridFlow 22s linear infinite;
+  will-change:transform,background-position;
+}
+
+.ambient-network {
+  opacity:.40 !important;
+  animation:networkDrift 24s ease-in-out infinite alternate, networkPulse 8s ease-in-out infinite !important;
+  will-change:transform,opacity;
+}
+.ambient-network::before,
+.ambient-network::after { will-change:transform; }
+
+@keyframes futureGridFlow {
+  0% { background-position:0 0,0 0,0 0,0 0; transform:perspective(900px) rotateX(64deg) translate3d(-1.5%,7%,0) scale(1.16); }
+  50% { background-position:26px 26px,26px 26px,0 0,0 0; transform:perspective(900px) rotateX(64deg) translate3d(1.5%,5%,0) scale(1.18); }
+  100% { background-position:52px 52px,52px 52px,0 0,0 0; transform:perspective(900px) rotateX(64deg) translate3d(-1.5%,7%,0) scale(1.16); }
+}
+@keyframes networkPulse {
+  0%,100% { opacity:.34; filter:saturate(.92) brightness(.96); }
+  50% { opacity:.48; filter:saturate(1.08) brightness(1.04); }
+}
+
+/* Tema claro: base neutra, limpa e com contraste AA/AAA em textos principais */
+[data-theme="light"] {
+  --bg:#f4f8fc;
+  --bg2:#edf4fa;
+  --surface:#ffffff;
+  --surface2:#f8fbfe;
+  --text:#071728;
+  --text2:#263d53;
+  --text3:#506a82;
+  --border:#bfd0df;
+  --border2:#d7e3ed;
+  --border-ctrl:#8fa9bf;
+}
+
+[data-theme="light"] body {
+  color:var(--text);
+  background:#f4f8fc;
+}
+[data-theme="light"] body::before {
+  opacity:1;
+  background:
+    radial-gradient(circle at 80% 8%, rgba(26,143,232,.08), transparent 25%),
+    radial-gradient(circle at 10% 62%, rgba(40,180,216,.055), transparent 28%),
+    linear-gradient(180deg,#fbfdff 0%,#f4f8fc 47%,#edf4fa 100%);
+}
+[data-theme="light"] body::after {
+  opacity:.18;
+  background:
+    linear-gradient(rgba(16,111,177,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,111,177,.055) 1px, transparent 1px),
+    radial-gradient(circle at 16% 20%, rgba(20,130,210,.08), transparent 23%),
+    radial-gradient(circle at 82% 72%, rgba(18,153,183,.065), transparent 24%);
+  background-size:58px 58px,58px 58px,100% 100%,100% 100%;
+}
+[data-theme="light"] .ambient-network {
+  opacity:.105 !important;
+  filter:saturate(.72) contrast(.86);
+}
+[data-theme="light"] .ambient-network::before,
+[data-theme="light"] .ambient-network::after {
+  opacity:.07;
+  filter:blur(95px);
+}
+
+/* Navegação clara realmente clara — brand-v6 é carregado por último */
+[data-theme="light"] .topnav.premium-nav {
+  background:rgba(250,253,255,.92);
+  border-bottom-color:rgba(45,93,130,.15);
+  box-shadow:0 10px 34px rgba(21,63,92,.07);
+}
+[data-theme="light"] .brand-institute { color:#527087; }
+[data-theme="light"] .brand-schultz { color:#0a2133; }
+[data-theme="light"] .brand-product { color:#0878bc; border-left-color:rgba(44,91,126,.22); }
+[data-theme="light"] .brand-product b { color:#36556d; }
+[data-theme="light"] .nav-link { color:#3f5a70; }
+[data-theme="light"] .nav-link:hover { color:#071728; background:rgba(11,110,212,.055); }
+[data-theme="light"] .nav-link.active { color:#075fae; }
+[data-theme="light"] .nav-status { color:#527087; }
+[data-theme="light"] .theme-btn,
+[data-theme="light"] .nav-toggle { color:#1f425e; background:rgba(255,255,255,.94); border-color:rgba(44,91,126,.20); }
+
+/* Hero claro — remove texto branco fixo e cria zona de leitura limpa */
+[data-theme="light"] .premium-hero::after {
+  content:"";
+  position:absolute;
+  left:0;
+  top:8%;
+  bottom:8%;
+  width:min(720px,54%);
+  z-index:0;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 28% 45%, rgba(250,253,255,.98) 0%, rgba(250,253,255,.91) 46%, rgba(250,253,255,.42) 70%, transparent 84%);
+  filter:blur(2px);
+}
+[data-theme="light"] .hero-copy { z-index:3; }
+[data-theme="light"] .home-eyebrow { color:#086da9; }
+[data-theme="light"] .premium-hero h1 { color:#081c2c; text-shadow:0 1px 0 rgba(255,255,255,.95); }
+[data-theme="light"] .premium-hero h1 em { color:#0879c8; }
+[data-theme="light"] .premium-hero p { color:#334e65; }
+[data-theme="light"] .hero-secondary { color:#173b56; background:rgba(255,255,255,.92); border-color:rgba(26,102,157,.28); }
+[data-theme="light"] .hero-trust { color:#4b667c; }
+[data-theme="light"] .hero-glow { opacity:.075; }
+[data-theme="light"] .hero-orbit { opacity:.48; }
+[data-theme="light"] .premium-hero::before { opacity:.34; }
+
+/* Superfícies opacas o suficiente para impedir que animações atravessem texto */
+[data-theme="light"] .quick-tools,
+[data-theme="light"] .dashboard-card,
+[data-theme="light"] .method-grid article,
+[data-theme="light"] .principles-strip,
+[data-theme="light"] .card,
+[data-theme="light"] .reflection-card,
+[data-theme="light"] .cross-cta,
+[data-theme="light"] .cmp-card,
+[data-theme="light"] .tool-card {
+  background:rgba(255,255,255,.965) !important;
+  border-color:rgba(64,105,137,.18) !important;
+  box-shadow:0 18px 52px rgba(26,65,94,.09), inset 0 1px 0 rgba(255,255,255,.96) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(1.03);
+  backdrop-filter:blur(14px) saturate(1.03);
+}
+[data-theme="light"] .quick-tool { color:#0b2133; border-color:rgba(64,105,137,.14); }
+[data-theme="light"] .quick-tool small,
+[data-theme="light"] .dashboard-card p,
+[data-theme="light"] .method-grid p,
+[data-theme="light"] .section-intro p,
+[data-theme="light"] .spotlight-content p { color:#4b667c; }
+[data-theme="light"] .dashboard-card h2,
+[data-theme="light"] .dashboard-card h3,
+[data-theme="light"] .method-grid h3,
+[data-theme="light"] .section-intro h2,
+[data-theme="light"] .tool-header h1 { color:#071b2b; }
+[data-theme="light"] .metric-value,
+[data-theme="light"] .life-metrics strong { color:#0a2133; }
+
+/* Formulários: branco sólido e labels legíveis */
+[data-theme="light"] input[type=text],
+[data-theme="light"] input[type=number],
+[data-theme="light"] input[type=email],
+[data-theme="light"] input[type=date],
+[data-theme="light"] .money-input-plain,
+[data-theme="light"] select,
+[data-theme="light"] textarea,
+[data-theme="light"] .money-prefix,
+[data-theme="light"] .ipca-input-wrap input {
+  background:#fff !important;
+  color:#081c2c !important;
+  border-color:#aebfce !important;
+  box-shadow:0 1px 0 rgba(13,52,78,.03);
+}
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder { color:#71879a; opacity:1; }
+[data-theme="light"] label,
+[data-theme="light"] .field-label,
+[data-theme="light"] .input-label { color:#243f55; }
+
+/* Cabeçalhos das ferramentas ganham uma névoa branca local para leitura */
+[data-theme="light"] .tool-header {
+  background:linear-gradient(180deg,rgba(252,254,255,.98),rgba(246,250,253,.88) 76%,rgba(246,250,253,0));
+  border-bottom-color:rgba(59,104,138,.10);
+}
+[data-theme="light"] .tool-header p { color:#48657b; }
+
+/* Footer acompanha o tema claro */
+[data-theme="light"] .premium-footer {
+  background:#edf4fa;
+  border-top-color:rgba(62,104,137,.14);
+}
+[data-theme="light"] .footer-brand-block span,
+[data-theme="light"] .footer-pillars,
+[data-theme="light"] .footer-credits { color:#60788b; }
+[data-theme="light"] .footer-brand-block strong { color:#102d43; }
+[data-theme="light"] .footer-brand-block small { color:#60788b; }
+
+/* Menu mobile claro */
+@media (max-width:860px) {
+  [data-theme="light"] .nav-links {
+    background:rgba(250,253,255,.985);
+    border-color:rgba(45,93,130,.18);
+    box-shadow:0 20px 48px rgba(25,64,91,.12);
+  }
+  [data-theme="light"] .nav-link { color:#29475e; }
+  [data-theme="light"] .nav-link.active { color:#075fae; background:rgba(11,110,212,.08); }
+  [data-theme="light"] .premium-hero::after {
+    top:0; bottom:0; left:-8%; width:116%;
+    background:linear-gradient(180deg,rgba(248,252,255,.16) 0%,rgba(248,252,255,.70) 42%,rgba(248,252,255,.96) 62%,rgba(248,252,255,.94) 100%);
+  }
+  body::after { opacity:.32; }
+  [data-theme="light"] body::after { opacity:.12; }
+}
+
+/* Safari/iPhone: animações mais econômicas e estáveis */
+@supports (-webkit-touch-callout:none) {
+  body::after { animation-duration:30s; }
+  .ambient-network { animation-duration:30s,10s !important; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  body::after,.ambient-network,.ambient-network::before,.ambient-network::after { animation:none !important; }
+}

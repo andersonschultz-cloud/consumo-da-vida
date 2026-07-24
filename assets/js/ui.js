@@ -24,7 +24,7 @@ function applyTheme() {
     btn.setAttribute('title', isDark ? 'Usar tema claro' : 'Usar tema escuro');
   }
   const themeMeta = document.querySelector('meta[name="theme-color"]');
-  if (themeMeta) themeMeta.setAttribute('content', isDark ? '#020914' : '#f4f8fb');
+  if (themeMeta) themeMeta.setAttribute('content', isDark ? '#020914' : '#edf5fa');
 }
 
 function toggleTheme() {
@@ -47,6 +47,7 @@ function navTo(page) {
   const navToggle = document.querySelector('.nav-toggle');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const pg = document.getElementById('page-' + page);
+  if (!pg) return;
   pg.classList.add('active');
   document.querySelectorAll('.nav-link').forEach(l =>
     l.classList.toggle('active', l.dataset.nav === page)
@@ -54,7 +55,7 @@ function navTo(page) {
   if (navLinks) navLinks.classList.remove('open');
   if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
   localStorage.setItem('cdv-page', page);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (_) { window.scrollTo(0, 0); }
   // WCAG SC 2.4.3: mover foco para o heading ao navegar
   requestAnimationFrame(() => {
     const h = pg.querySelector('h1, [role=heading]');
@@ -115,14 +116,28 @@ function closeModal() {
 /* ── Share / clipboard ──────────────────────────────────── */
 let _shareText = '';
 
-function share() {
-  navigator.clipboard.writeText(_shareText)
-    .then(() => {
-      const el = document.getElementById('copy-ok');
-      el.style.display = 'flex';
-      setTimeout(() => { el.style.display = 'none'; }, 3000);
-    })
-    .catch(() => alert(_shareText));
+async function share() {
+  const showCopied = () => {
+    const el = document.getElementById('copy-ok');
+    if (!el) return;
+    el.style.display = 'flex';
+    setTimeout(() => { el.style.display = 'none'; }, 3000);
+  };
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(_shareText);
+      showCopied();
+      return;
+    }
+    const ta = document.createElement('textarea');
+    ta.value = _shareText; ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand('copy'); ta.remove();
+    if (ok) showCopied(); else throw new Error('copy unavailable');
+  } catch (_) {
+    alert(_shareText);
+  }
 }
 
 /* ── Histórico (renderização) ────────────────────────────── */
@@ -145,3 +160,13 @@ function renderHistory() {
       </button>
     </div>`).join('');
 }
+
+
+/* Corrige mudanças de altura do Safari iOS quando barra de endereço/teclado aparecem. */
+function syncViewportHeight() {
+  const h = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  document.documentElement.style.setProperty('--app-vh', `${h * 0.01}px`);
+}
+syncViewportHeight();
+window.addEventListener('resize', syncViewportHeight, { passive: true });
+if (window.visualViewport) window.visualViewport.addEventListener('resize', syncViewportHeight, { passive: true });

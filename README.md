@@ -1,6 +1,6 @@
-# 💰 Consumo da Vida — v5.1
+# Consumo da Vida — v6.0 Premium
 
-**Hub de Inteligência Financeira para educação financeira consciente.**
+**Hub de Inteligência Financeira do Instituto Schultz — finanças, tecnologia e consciência.**
 
 🌐 **[consumodavida.com.br](https://consumodavida.com.br)**
 
@@ -35,3 +35,8 @@ git add -A && git commit -m "descrição" && git push origin main
 
 ---
 Desenvolvido por [Anderson Schultz Ribeiro](https://linkedin.com/in/anderson-schultz-ribeiro0001)
+
+
+## v6.0 — identidade premium
+
+Nova identidade Instituto Schultz, hero com raposa abstrata, dashboard premium, Método QDP, refinamento completo para desktop e iPhone e fallbacks de robustez. Veja `docs/testes-v6.md`.
