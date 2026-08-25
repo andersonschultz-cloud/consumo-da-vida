@@ -22,3 +22,55 @@ html[data-theme="dark"] .connectivity-canvas{opacity:.30}
 .tool-header{max-width:1180px!important}.tool-header h1{background:linear-gradient(90deg,#f4fbff,#b8eaff 70%);-webkit-background-clip:text;background-clip:text;color:transparent!important}.card,.reflection-card,.cross-cta,.cmp-card{background:linear-gradient(155deg,rgba(8,28,46,.88),rgba(4,16,28,.94))!important;border-color:rgba(76,181,239,.14)!important}.premium-footer{background:#01060c!important}
 @media(max-width:860px){.topnav.premium-nav{height:68px!important}.premium-hero{grid-template-columns:1fr!important;padding:34px 18px 42px!important}.hero-visual{min-height:300px!important}.hero-emblem{width:min(300px,78vw)!important;height:min(300px,78vw)!important}.quick-tools{grid-template-columns:1fr 1fr!important}.home-dashboard{grid-template-columns:1fr!important}.nav-links{top:74px!important}}
 @media(max-width:560px){.premium-hero h1{font-size:clamp(38px,11.7vw,50px)!important}.hero-visual{min-height:250px!important}.quick-tools{grid-template-columns:1fr!important}.quick-tool{min-height:116px!important}.nav-logo-frame{width:42px!important;height:42px!important}.brand-schultz{font-size:12px!important}}
+
+/* v7.1 — alinhamento e consistência das páginas de ferramentas */
+#page-calc .tool-header,
+#page-plan .tool-header,
+#page-sim .tool-header {
+  width: min(1180px, calc(100% - 36px)) !important;
+  margin-inline: auto !important;
+  padding-inline: 18px !important;
+  text-align: center !important;
+}
+#page-calc .tool-header .th-badge,
+#page-plan .tool-header .th-badge,
+#page-sim .tool-header .th-badge {
+  margin-inline: auto !important;
+}
+#page-calc .tool-header h1,
+#page-plan .tool-header h1,
+#page-sim .tool-header h1 {
+  max-width: 860px !important;
+  margin: 18px auto 14px !important;
+  text-align: center !important;
+  text-wrap: balance;
+}
+#page-calc .tool-header p,
+#page-plan .tool-header p,
+#page-sim .tool-header p {
+  max-width: 720px !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  text-wrap: pretty;
+}
+
+@media (max-width: 560px) {
+  #page-calc .tool-header,
+  #page-plan .tool-header,
+  #page-sim .tool-header {
+    width: 100% !important;
+    padding: 40px 20px 28px !important;
+  }
+  #page-calc .tool-header h1,
+  #page-plan .tool-header h1,
+  #page-sim .tool-header h1 {
+    font-size: clamp(31px, 9.4vw, 42px) !important;
+    line-height: 1.08 !important;
+  }
+  #page-calc .tool-header p,
+  #page-plan .tool-header p,
+  #page-sim .tool-header p {
+    font-size: 14px !important;
+    line-height: 1.65 !important;
+  }
+}
