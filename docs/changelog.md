@@ -140,3 +140,11 @@
 - Ícones adaptados para temas claro/escuro e redução de movimento.
 - Remoção de emojis decorativos em áreas funcionais para maior consistência visual.
 - Revisão editorial dos textos principais para linguagem mais institucional, clara e premium.
+
+## v7.0 — Professional Consulting Edition (2026-08-25)
+- Nova camada visual `professional-v7.css` carregada após o design system existente.
+- Hierarquia visual, navegação, hero, cards, formulários, modais e rodapé refinados para uso profissional.
+- Home reposicionada como ferramenta de apoio à consultoria financeira, preservando IDs e fluxos funcionais.
+- Melhorias específicas de toque e empilhamento do menu mobile.
+- Modo claro redesenhado com estética executiva e contraste elevado.
+- Nenhuma regra de cálculo, armazenamento, integração ou simulação foi alterada.
