@@ -97,7 +97,25 @@ function buildSeries(o, principal, monthly, months, applyIR) {
     const g    = fvP + fvA;
     let   v    = g;
     if (applyIR && o.taxable) {
-      v = g - Math.max(0, g - inv) * irRate(m);
+      // IR regressivo por lote/aporte. Cada aporte mensal possui seu próprio
+      // prazo de permanência, portanto não é correto aplicar a alíquota do
+      // prazo total sobre todo o rendimento acumulado.
+      //
+      // Principal: permanece aplicado por `m` meses.
+      // Aportes: fórmula de FV acima considera aportes no fim de cada mês;
+      // logo, no mês `m`, o aporte k tem idade (m-k) meses.
+      const principalGross = principal * Math.pow(1 + im, m);
+      const principalGain  = Math.max(0, principalGross - principal);
+      let net = principalGross - principalGain * irRate(m);
+
+      for (let k = 1; k <= m; k++) {
+        const age = m - k;
+        const lotGross = monthly * Math.pow(1 + im, age);
+        const lotGain  = Math.max(0, lotGross - monthly);
+        net += lotGross - lotGain * irRate(age);
+      }
+
+      v = net;
     }
     gross[m]    = g;
     invested[m] = inv;
