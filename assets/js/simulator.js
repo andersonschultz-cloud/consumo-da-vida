@@ -16,7 +16,7 @@ let simState = {
   selic:       SELIC_FALLBACK,
   years:       10,
   scrubMonth:  120,
-  applyIR:     false,
+  applyIR:     true,
   dragging:    false,
   assumedIPCA: 5.5,    // % a.a. — premissa para simulação do Tesouro IPCA+
 };
@@ -495,7 +495,7 @@ function renderComparison(computed) {
     const grossVal  = ser.gross[s]    || 0;        // valor bruto (sem IR)
     const inv       = ser.invested[s] || 0;        // capital investido até o mês s
     const grossEarn = Math.max(0, grossVal - inv); // juros brutos
-    const ir        = simState.applyIR && o.taxable ? grossEarn * irRate(s) : 0;
+    const ir        = simState.applyIR && o.taxable ? Math.max(0, grossVal - value) : 0;
     const juros     = Math.max(0, value - inv);    // juros líquidos
     const pct       = inv > 0 ? (value / inv - 1) * 100 : 0;
     return { ...o, value, grossVal, inv, grossEarn, juros, ir, pct };
