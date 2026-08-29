@@ -96,6 +96,25 @@ document.addEventListener('keydown', (event) => {
   if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
 });
 
+// Mantém o menu responsivo consistente ao girar o aparelho ou voltar ao desktop.
+function closeResponsiveMenu() {
+  const navLinks = document.getElementById('navLinks');
+  const navToggle = document.querySelector('.nav-toggle');
+  if (navLinks) navLinks.classList.remove('open');
+  if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+}
+
+let _menuViewport = window.innerWidth;
+window.addEventListener('resize', () => {
+  const current = window.innerWidth;
+  // Fecha quando cruza o breakpoint ou quando a largura muda de forma relevante.
+  if ((_menuViewport <= 900 && current > 900) || (_menuViewport > 900 && current <= 900) || Math.abs(current - _menuViewport) > 80) {
+    closeResponsiveMenu();
+  }
+  _menuViewport = current;
+}, { passive: true });
+window.addEventListener('orientationchange', closeResponsiveMenu, { passive: true });
+
 /* ── Modal QDP ──────────────────────────────────────────── */
 function openModal(nome, horas, vp, quote) {
   document.getElementById('modal-sub').textContent =

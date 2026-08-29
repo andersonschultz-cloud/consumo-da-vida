@@ -148,3 +148,9 @@
 - Melhorias específicas de toque e empilhamento do menu mobile.
 - Modo claro redesenhado com estética executiva e contraste elevado.
 - Nenhuma regra de cálculo, armazenamento, integração ou simulação foi alterada.
+## 2026-08-29 — Responsive v5
+- Corrigido cabeçalho mobile para não sobrepor o conteúdo durante a rolagem.
+- Menu mobile agora abre no fluxo da página e empurra o conteúdo para baixo.
+- Reforçada compatibilidade de grids, cards, formulários, gráficos e modais entre 320 px e desktop.
+- Menu passa a fechar em navegação, ESC, rotação e troca de breakpoint.
+
