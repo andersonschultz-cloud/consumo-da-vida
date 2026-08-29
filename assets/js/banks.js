@@ -90,7 +90,6 @@ function buildOptionsFromBanks(banks, selic) {
 function _hardcodedFallback(selic) {
   const s = selic || SELIC_FALLBACK;
   return [
-    { id:'picpay',  name:'PicPay',            sub:'150% do CDI',     color:'#21C25E', taxable:true,  on:true, derive:{base:'cdi',factor:1.5},      logo:'https://logo.clearbit.com/picpay.com',        product:'Reserva PicPay — CDB liq. diária',            rate:round2(cdiFromSelic(s)*1.5) },
     { id:'sicredi', name:'Sicredi',            sub:'108% do CDI',     color:'#00843D', taxable:true,  on:true, derive:{base:'cdi',factor:1.08},     logo:'https://logo.clearbit.com/sicredi.com.br',    product:'CDB Sicredi — liq. diária (mín. R$1.000)',    rate:round2(cdiFromSelic(s)*1.08) },
     { id:'nubank',  name:'Nubank',             sub:'100% do CDI',     color:'#820AD1', taxable:true,  on:true, derive:{base:'cdi',factor:1},        logo:'https://logo.clearbit.com/nubank.com.br',     product:'Conta Remunerada Nubank — CDB liq. diária',   rate:round2(cdiFromSelic(s)) },
     { id:'santander',name:'Santander',         sub:'100% do CDI',     color:'#CC0000', taxable:true,  on:true, derive:{base:'cdi',factor:1},        logo:'https://logo.clearbit.com/santander.com.br',  product:'CDB DI Santander — liq. diária',              rate:round2(cdiFromSelic(s)) },
