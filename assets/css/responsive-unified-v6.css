@@ -1,0 +1,406 @@
+/* ═══════════════════════════════════════════════════════════════
+   Consumo da Vida — Responsive Unified v6
+   Camada final de compatibilidade desktop / tablet / smartphone.
+   Objetivos:
+   - remover sobreposição do menu durante a rolagem;
+   - eliminar overflow horizontal;
+   - adaptar tipografia, grids, cards e formulários à largura real;
+   - preservar todas as regras de negócio e componentes existentes.
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --ru-max: 1240px;
+  --ru-gutter: clamp(16px, 3.2vw, 40px);
+  --ru-section-gap: clamp(44px, 6vw, 82px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0 !important;
+  margin: 0;
+  overflow-x: hidden !important;
+}
+
+main, .page, section, article, aside, footer,
+.container, .container-wide, .card, .field,
+.hero-copy, .hero-visual, .partner-card,
+.sim-sidebar, .sim-main, .dashboard-card {
+  min-width: 0;
+}
+
+img, svg, video { max-width: 100%; height: auto; }
+canvas { max-width: 100%; }
+input, select, textarea, button { min-width: 0; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+/* ── Navegação ───────────────────────────────────────────────
+   Importante: a barra fica no fluxo da página em TODAS as larguras.
+   Assim ela nunca cobre hero, títulos, formulários ou resultados ao rolar.
+   ─────────────────────────────────────────────────────────── */
+.topnav.premium-nav {
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  inset: auto !important;
+  z-index: 50 !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 72px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px max(var(--ru-gutter), env(safe-area-inset-right)) 10px max(var(--ru-gutter), env(safe-area-inset-left)) !important;
+  border-radius: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: clamp(12px, 2vw, 28px) !important;
+  box-shadow: 0 1px 0 var(--pv-line), 0 10px 28px rgba(0,0,0,.08) !important;
+}
+
+.nav-brand {
+  flex: 0 1 300px !important;
+  min-width: 190px !important;
+  max-width: 300px !important;
+  overflow: hidden !important;
+}
+.nav-brand-text, .brand-lockup { min-width: 0 !important; }
+.brand-product {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.nav-links {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  flex: 0 1 auto !important;
+  margin-inline: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+.nav-link { white-space: nowrap !important; }
+.nav-right { flex: 0 0 auto !important; min-width: 0 !important; }
+
+/* ── Larguras fluidas de conteúdo ─────────────────────────── */
+.home-hero.premium-hero,
+.consulting-strip,
+.quick-tools,
+.partner-section,
+.home-dashboard,
+.method-section,
+.principles-strip,
+.footer-main {
+  width: min(calc(100% - (var(--ru-gutter) * 2)), var(--ru-max)) !important;
+  max-width: var(--ru-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.home-hero.premium-hero {
+  min-height: auto !important;
+  padding: clamp(64px, 7vw, 96px) 0 clamp(54px, 6vw, 82px) !important;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, .72fr) !important;
+  gap: clamp(34px, 5vw, 72px) !important;
+  overflow: visible !important;
+}
+.hero-copy { max-width: 760px !important; }
+.home-hero h1 {
+  font-size: clamp(42px, 4.8vw, 64px) !important;
+  line-height: 1.02 !important;
+  overflow-wrap: break-word !important;
+  text-wrap: balance;
+}
+.home-hero .hero-copy > p {
+  font-size: clamp(14px, 1.2vw, 16px) !important;
+  line-height: 1.72 !important;
+  text-wrap: pretty;
+}
+.portfolio-console { min-height: 0 !important; }
+.portfolio-console-card { width: min(100%, 420px) !important; }
+
+.consulting-strip { margin-top: 0 !important; }
+.quick-tools {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: clamp(10px, 1.4vw, 16px) !important;
+}
+.quick-tool { min-width: 0 !important; }
+.quick-tool b, .quick-tool small { overflow-wrap: break-word !important; }
+
+.partner-section { padding-inline: 0 !important; }
+.partner-card {
+  width: 100% !important;
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+  gap: clamp(18px, 3vw, 34px) !important;
+}
+.partner-copy h2 { text-wrap: balance; }
+.partner-copy p { text-wrap: pretty; }
+
+.home-dashboard { grid-template-columns: minmax(0, 1.3fr) minmax(300px, .7fr) !important; }
+.method-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.principles-strip { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+.life-metrics { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+
+/* ── Ferramentas ─────────────────────────────────────────── */
+#page-calc .tool-header,
+#page-plan .tool-header,
+#page-sim .tool-header,
+.tool-header {
+  width: min(calc(100% - (var(--ru-gutter) * 2)), 1040px) !important;
+  max-width: 1040px !important;
+  margin-inline: auto !important;
+  padding: clamp(54px, 6vw, 80px) 0 clamp(28px, 4vw, 44px) !important;
+  text-align: center !important;
+}
+.tool-header h1 {
+  max-width: 850px !important;
+  margin-inline: auto !important;
+  font-size: clamp(36px, 4.2vw, 54px) !important;
+  line-height: 1.06 !important;
+  overflow-wrap: break-word !important;
+  text-wrap: balance;
+}
+.tool-header p {
+  max-width: 700px !important;
+  margin-inline: auto !important;
+  font-size: clamp(13px, 1.15vw, 15px) !important;
+  line-height: 1.72 !important;
+  text-wrap: pretty;
+}
+
+.container {
+  width: min(calc(100% - (var(--ru-gutter) * 2)), 1060px) !important;
+  max-width: 1060px !important;
+  margin-inline: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.container-wide {
+  width: min(calc(100% - (var(--ru-gutter) * 2)), var(--ru-max)) !important;
+  max-width: var(--ru-max) !important;
+}
+
+.grid2, .sim-grid { min-width: 0 !important; }
+.card, .reflection-card, .cross-cta, .cmp-card,
+.chart-canvas-wrap, .sim-chart-wrap, #rankingList { max-width: 100% !important; }
+
+input, select, textarea {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+/* ── Notebooks e desktops compactos ─────────────────────── */
+@media (max-width: 1180px) {
+  :root { --ru-gutter: clamp(16px, 2.4vw, 28px); }
+  .nav-status { display: none !important; }
+  .nav-brand { flex-basis: 250px !important; max-width: 250px !important; }
+  .nav-link { padding-inline: 10px !important; font-size: 12px !important; }
+  .quick-tools { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .home-dashboard { grid-template-columns: minmax(0, 1fr) !important; }
+  .partner-card { grid-template-columns: auto minmax(0,1fr) !important; }
+  .partner-action { grid-column: 2; justify-self: start; }
+}
+
+@media (max-width: 1040px) {
+  .home-hero.premium-hero {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 38px !important;
+  }
+  .hero-copy { max-width: 780px !important; }
+  .hero-visual.portfolio-console { width: min(100%, 640px) !important; margin-inline: auto !important; }
+  .portfolio-console-card { width: min(100%, 560px) !important; margin-inline: auto !important; }
+  .method-grid { gap: 12px !important; }
+}
+
+/* ── Tablet / smartphone ────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --ru-gutter: 18px; }
+
+  .topnav.premium-nav {
+    min-height: 66px !important;
+    padding: 9px max(14px, env(safe-area-inset-right)) 9px max(14px, env(safe-area-inset-left)) !important;
+    flex-wrap: wrap !important;
+    gap: 7px !important;
+  }
+  .nav-brand {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: calc(100% - 92px) !important;
+  }
+  .nav-logo-frame { flex-shrink: 0 !important; }
+  .brand-schultz { display: none !important; }
+  .brand-product { display: block !important; }
+  .nav-right { margin-left: auto !important; gap: 7px !important; }
+  .nav-toggle { display: inline-flex !important; align-items: center !important; justify-content: center !important; }
+
+  /* Menu mobile abre no fluxo e EMPURRA o conteúdo. Nunca flutua por cima. */
+  .nav-links {
+    order: 3 !important;
+    flex: 1 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 2px 0 0 !important;
+    padding: 7px !important;
+    display: none !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 3px !important;
+    border: 1px solid var(--pv-line) !important;
+    border-radius: 10px !important;
+    background: var(--pv-surface) !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+  .nav-links.open { display: flex !important; }
+  .nav-link {
+    width: 100% !important;
+    min-height: 44px !important;
+    padding: 0 13px !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    white-space: normal !important;
+    border-radius: 8px !important;
+  }
+
+  .home-hero.premium-hero { padding: 52px 0 46px !important; }
+  .home-hero h1 { font-size: clamp(38px, 7.7vw, 54px) !important; }
+  .hero-actions { flex-wrap: wrap !important; }
+  .hero-trust { flex-wrap: wrap !important; }
+
+  .consulting-strip { flex-wrap: wrap !important; align-items: flex-start !important; }
+  .partner-card { grid-template-columns: minmax(0, 1fr) !important; }
+  .partner-logo-wrap { justify-self: start !important; }
+  .partner-action { grid-column: auto !important; justify-self: start !important; }
+  .principles-strip { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .life-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .method-grid { grid-template-columns: minmax(0, 1fr) !important; }
+
+  .grid2, .sim-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .cmp-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  .chart-canvas-wrap, .sim-chart-wrap { overflow: hidden !important; }
+}
+
+@media (max-width: 640px) {
+  :root { --ru-gutter: 14px; }
+
+  .topnav.premium-nav { min-height: 62px !important; padding-block: 8px !important; }
+  .nav-logo-frame { width: 40px !important; height: 40px !important; flex: 0 0 40px !important; }
+  .nav-logo { width: 38px !important; height: 38px !important; }
+  .brand-product { font-size: 10.5px !important; }
+  .theme-btn, .nav-toggle { width: 36px !important; height: 36px !important; min-width: 36px !important; flex: 0 0 36px !important; }
+
+  .home-hero.premium-hero { padding: 42px 0 38px !important; gap: 28px !important; }
+  .home-hero h1 { font-size: clamp(33px, 10.2vw, 44px) !important; line-height: 1.04 !important; }
+  .home-hero .hero-copy > p { font-size: 13.5px !important; line-height: 1.65 !important; }
+  .hero-actions { display: grid !important; grid-template-columns: 1fr !important; width: 100% !important; }
+  .hero-primary, .hero-secondary { width: 100% !important; justify-content: center !important; }
+  .hero-trust { display: grid !important; grid-template-columns: 1fr !important; gap: 7px !important; }
+
+  .quick-tools { grid-template-columns: minmax(0, 1fr) !important; }
+  .quick-tool { width: 100% !important; }
+  .pc-metrics { grid-template-columns: minmax(0, 1fr) !important; }
+  .pc-flow { flex-wrap: wrap !important; row-gap: 8px !important; }
+  .partner-card { padding: 20px !important; }
+  .partner-logo-wrap { max-width: 180px !important; }
+  .partner-copy h2 { font-size: clamp(25px, 7.7vw, 34px) !important; }
+  .partner-action { width: 100% !important; justify-content: center !important; }
+
+  .life-metrics, .principles-strip { grid-template-columns: minmax(0, 1fr) !important; }
+  .life-metrics > div, .principles-strip > div { border-right: 0 !important; }
+
+  .tool-header { padding: 40px 0 26px !important; }
+  .tool-header h1 { font-size: clamp(30px, 9vw, 40px) !important; line-height: 1.07 !important; }
+  .tool-header p { font-size: 12.8px !important; line-height: 1.65 !important; }
+
+  .card, .reflection-card, .cross-cta { padding-left: 16px !important; padding-right: 16px !important; }
+  .grid2, .metrics-grid, .plan-metrics, .scenario-grid, .discount-grid, .cmp-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .cross-cta { align-items: flex-start !important; flex-wrap: wrap !important; }
+  .cross-cta-text { min-width: 0 !important; flex: 1 1 calc(100% - 58px) !important; }
+  .cross-cta-btn, .btn-share, .btn-add-bank, .btn-calc { width: 100% !important; }
+  .cb-form-actions { flex-direction: column !important; }
+  .cb-form-actions > * { width: 100% !important; flex: 1 1 auto !important; }
+  .ipca-row, .selic-row { flex-wrap: wrap !important; }
+  .ipca-input-wrap { width: 100% !important; }
+
+  .modal-overlay { padding: 10px !important; }
+  .modal { width: 100% !important; max-width: 100% !important; max-height: calc(100dvh - 20px) !important; border-radius: 16px !important; }
+
+  .footer-main { gap: 18px !important; }
+  .footer-brand-block, .footer-pillars, .footer-partner { max-width: 100% !important; }
+}
+
+@media (max-width: 380px) {
+  :root { --ru-gutter: 11px; }
+  .nav-brand { max-width: calc(100% - 82px) !important; }
+  .brand-product { font-size: 9.8px !important; }
+  .theme-btn, .nav-toggle { width: 34px !important; height: 34px !important; min-width: 34px !important; flex-basis: 34px !important; }
+  .home-hero h1 { font-size: clamp(31px, 9.7vw, 38px) !important; }
+  .portfolio-console-card { padding: 18px !important; }
+  .tool-header h1 { font-size: clamp(28px, 8.8vw, 35px) !important; }
+}
+
+/* Acessibilidade: sem animações agressivas para quem pediu redução. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* Evita que a animação de fundo aumente a largura rolável em iOS/Chromium.
+   O movimento continua vivo via background-position, sem escalar o elemento fixo. */
+.ambient-network {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+  overflow: hidden !important;
+  contain: paint !important;
+  animation: ruNetworkDrift 26s ease-in-out infinite alternate !important;
+}
+@keyframes ruNetworkDrift {
+  from { background-position: calc(50% - 8px) 62px; }
+  to   { background-position: calc(50% + 10px) 78px; }
+}
+
+/* O grid vivo também se move sem escala/perspectiva, evitando ampliar o
+   scrollWidth do body em telas estreitas. */
+body::after {
+  transform: none !important;
+  transform-origin: center !important;
+  animation: ruGridFlow 30s linear infinite !important;
+  overflow: hidden !important;
+}
+@keyframes ruGridFlow {
+  from { background-position: 0 0, 0 0, 0 0, 0 0; }
+  to   { background-position: 52px 52px, 52px 52px, 0 0, 0 0; }
+}
+
+/* ── Correção fina para smartphones estreitos ──────────────
+   O halo decorativo do hero usava inset horizontal negativo e ampliava o
+   scrollWidth em 6–9 px em 320–430 px. Mantemos o halo vertical, porém
+   contido na largura útil, eliminando qualquer gesto/rolagem lateral. */
+@media (max-width: 640px) {
+  .hero-copy::before {
+    inset: -20px 0 !important;
+  }
+  #main-content,
+  .page,
+  .home-hero,
+  .hero-copy {
+    max-width: 100% !important;
+    overflow-x: clip !important;
+  }
+}

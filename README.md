@@ -48,3 +48,10 @@ A camada `assets/js/connectivity.js` desenha uma rede animada de nós luminosos 
 Correção do logo circular, retorno do seletor de tema no mobile e nova rodada de QA estrutural/financeiro. Consulte `docs/testes-v6.3.md`.
 > **v6.6:** identidade visual atualizada com o novo logo circular aprovado. O emblema vivo da home foi preservado e os acabamentos extras do logo no menu e no rodapé foram removidos para um resultado mais clean.
 
+
+
+## Compatibilidade v7 — Desktop e smartphones
+
+A revisão v7 reforça a responsividade de 320 px a 2560 px. A barra superior permanece no fluxo da página e não sobrepõe o conteúdo durante a rolagem; no mobile, o menu expande o cabeçalho em vez de flutuar sobre a interface. A última bateria também eliminou um overflow horizontal de 6–9 px causado pelo halo decorativo do hero em smartphones estreitos.
+
+Relatório completo: `docs/validacao-desktop-mobile-v7.md`.

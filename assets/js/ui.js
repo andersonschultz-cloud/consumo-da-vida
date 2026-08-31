@@ -105,6 +105,7 @@ function closeResponsiveMenu() {
 }
 
 let _menuViewport = window.innerWidth;
+let _menuResizeTimer = null;
 window.addEventListener('resize', () => {
   const current = window.innerWidth;
   // Fecha quando cruza o breakpoint ou quando a largura muda de forma relevante.
@@ -112,8 +113,19 @@ window.addEventListener('resize', () => {
     closeResponsiveMenu();
   }
   _menuViewport = current;
+
+  // Em resize contínuo (desktop, split-screen ou rotação), recalcula a viewport
+  // sem deixar estados de menu presos entre breakpoints.
+  clearTimeout(_menuResizeTimer);
+  _menuResizeTimer = setTimeout(() => {
+    if (window.innerWidth > 900) closeResponsiveMenu();
+    syncViewportHeight();
+  }, 120);
 }, { passive: true });
-window.addEventListener('orientationchange', closeResponsiveMenu, { passive: true });
+window.addEventListener('orientationchange', () => {
+  closeResponsiveMenu();
+  setTimeout(syncViewportHeight, 80);
+}, { passive: true });
 
 /* ── Modal QDP ──────────────────────────────────────────── */
 function openModal(nome, horas, vp, quote) {
