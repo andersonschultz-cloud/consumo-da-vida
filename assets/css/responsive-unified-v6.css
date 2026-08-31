@@ -404,3 +404,26 @@ body::after {
     overflow-x: clip !important;
   }
 }
+
+/* ==========================================================
+   v7.1 — Paridade visual dos logos no rodapé
+   Instituto Schultz e Consumo da Vida usam a mesma dimensão.
+   ========================================================== */
+.footer-partner img {
+  width: 40px !important;
+  height: 40px !important;
+  flex: 0 0 40px !important;
+  object-fit: contain !important;
+}
+
+.footer-partner {
+  gap: 11px !important;
+}
+
+@media (max-width: 620px) {
+  .footer-partner img {
+    width: 36px !important;
+    height: 36px !important;
+    flex-basis: 36px !important;
+  }
+}
