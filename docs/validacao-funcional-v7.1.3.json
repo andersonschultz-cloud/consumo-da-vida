@@ -1,0 +1,72 @@
+{
+  "total": 13,
+  "passed": 13,
+  "failed": 0,
+  "checks": [
+    {
+      "test": "nav home",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "test": "nav calc",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "test": "nav plan",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "test": "nav sim",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "test": "calculator math",
+      "ok": true,
+      "detail": "['R$ 25,00', '40,0', '5,0', '20,0']"
+    },
+    {
+      "test": "planner impact",
+      "ok": true,
+      "detail": "Renda mensal\nR$ 5.000,00\nValor do produto\nR$ 1.000,00\nImpacto na renda\n20,0%\n\nCompra acessível. Vale pesquisar e compara"
+    },
+    {
+      "test": "planner scenarios",
+      "ok": true,
+      "detail": "3"
+    },
+    {
+      "test": "simulator IR applied",
+      "ok": true,
+      "detail": "gross=54209.71, net=49804.00"
+    },
+    {
+      "test": "simulator IR default checked",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "test": "simulator ranking",
+      "ok": true,
+      "detail": "8"
+    },
+    {
+      "test": "theme toggle",
+      "ok": true,
+      "detail": "dark->light"
+    },
+    {
+      "test": "custom institution",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "test": "uncaught JS errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

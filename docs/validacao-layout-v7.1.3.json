@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "viewports": [
+    {
+      "viewport": 320,
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 60,
+      "menuPush": 197,
+      "heroVisual": "none"
+    },
+    {
+      "viewport": 360,
+      "scrollWidth": 360,
+      "clientWidth": 360,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 60,
+      "menuPush": 197,
+      "heroVisual": "none"
+    },
+    {
+      "viewport": 390,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 60,
+      "menuPush": 197,
+      "heroVisual": "none"
+    },
+    {
+      "viewport": 430,
+      "scrollWidth": 430,
+      "clientWidth": 430,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 60,
+      "menuPush": 197,
+      "heroVisual": "none"
+    },
+    {
+      "viewport": 768,
+      "scrollWidth": 768,
+      "clientWidth": 768,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 64,
+      "menuPush": 204,
+      "heroVisual": "none"
+    },
+    {
+      "viewport": 900,
+      "scrollWidth": 900,
+      "clientWidth": 900,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 64,
+      "menuPush": 206.3,
+      "heroVisual": "none"
+    },
+    {
+      "viewport": 1024,
+      "scrollWidth": 1024,
+      "clientWidth": 1024,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 66,
+      "menuPush": 0,
+      "heroVisual": "none"
+    },
+    {
+      "viewport": 1366,
+      "scrollWidth": 1366,
+      "clientWidth": 1366,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 66,
+      "menuPush": 0,
+      "heroVisual": "flex"
+    },
+    {
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 66,
+      "menuPush": 0,
+      "heroVisual": "flex"
+    },
+    {
+      "viewport": 1920,
+      "scrollWidth": 1920,
+      "clientWidth": 1920,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 66,
+      "menuPush": 0,
+      "heroVisual": "flex"
+    },
+    {
+      "viewport": 2560,
+      "scrollWidth": 2560,
+      "clientWidth": 2560,
+      "horizontalScrollAfterAttempt": 0,
+      "overflowX": "clip",
+      "navPosition": "relative",
+      "navHeight": 66,
+      "menuPush": 0,
+      "heroVisual": "flex"
+    }
+  ]
+}
