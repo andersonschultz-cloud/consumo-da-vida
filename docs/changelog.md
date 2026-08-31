@@ -154,3 +154,9 @@
 - Reforçada compatibilidade de grids, cards, formulários, gráficos e modais entre 320 px e desktop.
 - Menu passa a fechar em navegação, ESC, rotação e troca de breakpoint.
 
+
+### 2026-08-31 — Parceria Instituto Schultz
+- Adicionada seção institucional na home anunciando a parceria Consumo da Vida × Instituto Schultz.
+- Incluído hyperlink seguro para `https://www.institutoschultz.com` com abertura em nova aba.
+- Adicionado símbolo vetorial do Instituto Schultz e assinatura da parceria no rodapé.
+- Layout responsivo para desktop, tablet e smartphone, incluindo tema claro e escuro.
