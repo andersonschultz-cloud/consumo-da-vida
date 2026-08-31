@@ -427,3 +427,22 @@ body::after {
     flex-basis: 36px !important;
   }
 }
+
+/* ==========================================================
+   v7.1.1 — Identidade correta das marcas
+   O logo do Consumo da Vida permanece como marca principal.
+   O logo oficial do Instituto Schultz é usado somente quando
+   a interface se refere explicitamente à parceria/Instituto.
+   ========================================================== */
+.partner-logo-wrap img,
+.footer-partner img {
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* Mantém a marca Consumo da Vida legível no menu compacto. */
+@media (max-width: 960px) {
+  .brand-product {
+    display: block !important;
+  }
+}
